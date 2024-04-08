@@ -14,16 +14,6 @@ using namespace DirectX;
 
 Scene::Scene() :objectManager(this)
 {
-  // フェードイン・アウト
-  {
-    GameObject* fadeInOut = objectManager.Create(TASK_LAYER::FIRST).get();
-    fadeSprite = fadeInOut->AddComponent<CompBooleanSprite>(&fadeOutFlag, 1.6f);
-    fadeInOut->transform.scale = { 1920,1080,0 }; // 画面サイズ
-    CompSprite2D* sprite = fadeInOut->AddComponent<CompSprite2D>(&sprite2DRenderer).get();
-    sprite->SetColor({ 0.0f,0.0f,0.0f,1.0f });
-    sprite->SetDrawOrder(10);
-    sprite->SetDsMode(DS_MODE::ZT_OFF_ZW_ON);
-  }
 }
 
 void Scene::Finalize()

@@ -172,15 +172,6 @@
     <Filter Include="GameCode\Component\Camera\Player">
       <UniqueIdentifier>{8d1fc7da-96f8-42c2-9bb1-bdd06701dde3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Component\Weapons">
-      <UniqueIdentifier>{0ef19bb2-2a4b-4142-9108-17cfea63869e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Projectile">
-      <UniqueIdentifier>{ace708be-73da-49ea-a064-e966328aa20b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Projectile\Straight">
-      <UniqueIdentifier>{392fc3d1-06df-4e98-89b2-88c8abb2e4d7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\ModelResource">
       <UniqueIdentifier>{911f9d29-baf8-43d7-8fa9-70c7ef0cc5d0}</UniqueIdentifier>
     </Filter>
@@ -189,12 +180,6 @@
     </Filter>
     <Filter Include="Graphics\Renderer\ShadowMap">
       <UniqueIdentifier>{4f394154-c766-4733-8a19-48cc6a4b7cdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Weapons\Sword">
-      <UniqueIdentifier>{83df35b2-23e4-45b0-ac05-1ec3a120a36a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Weapons\Gun">
-      <UniqueIdentifier>{a2305aae-f444-4afb-94fa-514b7cda6881}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\TrailEffect">
       <UniqueIdentifier>{18abc539-5093-4f9d-a726-ed9e1742272b}</UniqueIdentifier>
@@ -274,24 +259,6 @@
     <Filter Include="System\Audio">
       <UniqueIdentifier>{34a4e216-1622-4203-ada6-e1e7673cad55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Component\Effect\Particle\Controller">
-      <UniqueIdentifier>{2cba063b-563c-4d46-bb50-9996b4f56705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI">
-      <UniqueIdentifier>{dabf5539-7dcd-4ade-878e-c8609d01c3f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\Sight">
-      <UniqueIdentifier>{d2cb49c0-2a07-4eb7-b5b6-a5cf2aa8262c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Character\ArmoredCore">
-      <UniqueIdentifier>{a80c8e7e-56de-4037-8723-b193bec3011a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\Scroll">
-      <UniqueIdentifier>{fd73738c-031a-4ee0-9359-dba57838bad6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\ThrusterGauge">
-      <UniqueIdentifier>{62fff7bf-52b2-4339-a9ec-23e0821cc02a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Component\Font">
       <UniqueIdentifier>{416ddb22-31a4-4488-a5ae-88c303e221b7}</UniqueIdentifier>
     </Filter>
@@ -304,50 +271,14 @@
     <Filter Include="GameCode\Component\Font\Number">
       <UniqueIdentifier>{b58f8855-c606-4a22-80a6-000a518aa252}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Component\Effect\Particle\Controller\ArmoredCore">
-      <UniqueIdentifier>{4e9320d9-a6bf-40ab-b2fd-9fb52f2a0eec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\BehaviorTree\Enemy">
-      <UniqueIdentifier>{5f4308d3-1b91-4f48-83dd-d1160b7c772c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Character\Enemy">
-      <UniqueIdentifier>{a3a33bd8-9410-4de7-8ab1-5f33777d7145}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Character\Enemy\Helicopter">
-      <UniqueIdentifier>{7d61e2b9-fe58-4807-9811-e11df0230093}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Character\Enemy\ArmoredCore">
-      <UniqueIdentifier>{76709abc-75be-400b-a2df-1e47f1264022}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\StateMachine\Helicopter">
-      <UniqueIdentifier>{9e9d8d1f-66f3-4aa4-84e6-fdbb7e78eb97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Effekseer">
       <UniqueIdentifier>{5faf95b5-8ea2-4d86-bc59-ff8c9d22c196}</UniqueIdentifier>
     </Filter>
     <Filter Include="Graphics\Renderer\Sprite">
       <UniqueIdentifier>{5a3b7090-cdf9-4226-bd25-873c46f9ab02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Component\UI\Magazine">
-      <UniqueIdentifier>{6a1b0c64-b634-437c-ad5b-c55f4ce6f60b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\GameSystem">
-      <UniqueIdentifier>{e6236da8-769e-45c3-bc9d-7f7bb67270bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\GameSystem\ScoreManager">
-      <UniqueIdentifier>{51913061-1baa-496a-8454-620eb63980a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\GameSystem\EnemySpawner">
-      <UniqueIdentifier>{f3482d0e-e02f-43ea-8dd9-13138e856225}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Font\TimeLimit">
-      <UniqueIdentifier>{cf3c89a2-79f2-4c7e-afd8-6245f154f32a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Scenes\03_Result">
       <UniqueIdentifier>{693a9442-c587-4acc-9bc8-d745fc0cf05d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Sprite\Boolean">
-      <UniqueIdentifier>{37032b17-b199-4f33-b61a-25a960c231ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameCode\Component\Sprite\2D">
       <UniqueIdentifier>{92bed95f-b6b0-4029-ba7e-20760d7e8564}</UniqueIdentifier>
@@ -361,35 +292,8 @@
     <Filter Include="GameCode\StateMachine\Camera">
       <UniqueIdentifier>{880347ad-b5f5-4664-a473-7daa72bf97fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\Component\UI\StartUp">
-      <UniqueIdentifier>{7fd07679-3e9a-4308-8355-7ca476556898}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\StartUpManager">
-      <UniqueIdentifier>{cdffdae2-f512-44c2-889f-5116c7a6074f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\StartUp\Scale">
-      <UniqueIdentifier>{38c87e74-9734-4c9d-9e1f-1c6420ee2d50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\StartUp\TexScroll">
-      <UniqueIdentifier>{a733a374-d658-4983-a47f-8ee9ea3c30cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HLSL\SpriteShader\BendScreen">
       <UniqueIdentifier>{b67c2de1-d823-473c-8b05-b295228833b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\UI\StartUp\Other">
-      <UniqueIdentifier>{5b7201ba-d9ba-4bb5-852d-3b9cca16dc69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Effect\Particle\Controller\OneShot">
-      <UniqueIdentifier>{90dae274-279b-4e89-a190-d60db985a806}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\StateMachine\EnemyAC">
-      <UniqueIdentifier>{861494b5-51ff-4126-947f-8cfcabad8b05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Character\Player">
-      <UniqueIdentifier>{9080ffd5-c406-4843-91cd-78232d7d4569}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameCode\Component\Weapons\PileBunker">
-      <UniqueIdentifier>{1788a019-4798-4f0d-a693-a3928c05bed6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -531,23 +435,11 @@
     <ClCompile Include="Source\SceneSystem\SceneLoading.cpp">
       <Filter>GameCode\Scenes\99_Load</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompPlayer.cpp">
-      <Filter>GameCode\Component\Character\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\StateMachine\AcStates.cpp">
-      <Filter>GameCode\StateMachine\ArmoredCore</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\CharacterManager.cpp">
       <Filter>GameCode\GameObject\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompEnemyAc.cpp">
-      <Filter>GameCode\Component\Character\Enemy\ArmoredCore</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\CompCameraPlayer.cpp">
       <Filter>GameCode\Component\Camera\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompStraightBullet.cpp">
-      <Filter>GameCode\Component\Projectile\Straight</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\ModelResource.cpp">
       <Filter>Graphics\ModelResource</Filter>
@@ -573,9 +465,6 @@
     <ClCompile Include="Source\Graphics\StaticModelRenderer.cpp">
       <Filter>Graphics\Renderer\Model\StaticBatch</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StateMachine\AcArmStates.cpp">
-      <Filter>GameCode\StateMachine\ArmoredCore</Filter>
-    </ClCompile>
     <ClCompile Include="Source\System\Dialog.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -590,12 +479,6 @@
     </ClCompile>
     <ClCompile Include="Source\Graphics\TrailEffectManager.cpp">
       <Filter>Graphics\TrailEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompGun.cpp">
-      <Filter>GameCode\Component\Weapons\Gun</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompSword.cpp">
-      <Filter>GameCode\Component\Weapons\Sword</Filter>
     </ClCompile>
     <ClCompile Include="Source\Component\CompModelBase.cpp">
       <Filter>GameCode\Component\Model</Filter>
@@ -630,12 +513,6 @@
     <ClCompile Include="Source\Graphics\Shaders\SpriteShader.cpp">
       <Filter>Graphics\Shaders\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompWeaponBase.cpp">
-      <Filter>GameCode\Component\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompProjectileBase.cpp">
-      <Filter>GameCode\Component\Projectile</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\CompCharacter.cpp">
       <Filter>GameCode\Component\Character</Filter>
     </ClCompile>
@@ -663,21 +540,6 @@
     <ClCompile Include="Source\Audio\AudioSource.cpp">
       <Filter>System\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompScrollUI.cpp">
-      <Filter>GameCode\Component\UI\Scroll</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompArmoredCore.cpp">
-      <Filter>GameCode\Component\Character\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\ThrusterManager.cpp">
-      <Filter>GameCode\Component\Character\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompThrusterUI.cpp">
-      <Filter>GameCode\Component\UI\ThrusterGauge</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompThrusterBaseUI.cpp">
-      <Filter>GameCode\Component\UI\ThrusterGauge</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Component\CompFont.cpp">
       <Filter>GameCode\Component\Font</Filter>
     </ClCompile>
@@ -687,53 +549,11 @@
     <ClCompile Include="Source\Component\CompFontNumber.cpp">
       <Filter>GameCode\Component\Font\Number</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompSightUI.cpp">
-      <Filter>GameCode\Component\UI\Sight</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompParticleThrusterCtr.cpp">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompParticleSlashCtr.cpp">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompParticleLandDustCtr.cpp">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompParticleQuickBoostCtr.cpp">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\EnemySupport.cpp">
-      <Filter>GameCode\Component\Character\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompHelicopter.cpp">
-      <Filter>GameCode\Component\Character\Enemy\Helicopter</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\StateMachine\HelicopterStates.cpp">
-      <Filter>GameCode\StateMachine\Helicopter</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics\Effect.cpp">
       <Filter>Graphics\Effekseer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\EffectManager.cpp">
       <Filter>Graphics\Effekseer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompBooleanSprite.cpp">
-      <Filter>GameCode\Component\Sprite\Boolean</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompMagazineCoverUI.cpp">
-      <Filter>GameCode\Component\UI\Magazine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompMagazineUI.cpp">
-      <Filter>GameCode\Component\UI\Magazine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameSystem\ScoreManager.cpp">
-      <Filter>GameCode\GameSystem\ScoreManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameSystem\EnemySpawner.cpp">
-      <Filter>GameCode\GameSystem\EnemySpawner</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompTimeLimitFont.cpp">
-      <Filter>GameCode\Component\Font\TimeLimit</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scenes\SceneResult.cpp">
       <Filter>GameCode\Scenes\03_Result</Filter>
@@ -750,23 +570,8 @@
     <ClCompile Include="Source\StateMachine\CameraState.cpp">
       <Filter>GameCode\StateMachine\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Component\CompStartUpScale.cpp">
-      <Filter>GameCode\Component\UI\StartUp\Scale</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\StartUpManager\StartUpManager.cpp">
-      <Filter>GameCode\StartUpManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompStartUpScroll.cpp">
-      <Filter>GameCode\Component\UI\StartUp\TexScroll</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompParticleOneShotCtr.cpp">
-      <Filter>GameCode\Component\Effect\Particle\Controller\OneShot</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\StateMachine\EnemyAcStates.cpp">
-      <Filter>GameCode\StateMachine\EnemyAC</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Component\CompPileBunker.cpp">
-      <Filter>GameCode\Component\Weapons\PileBunker</Filter>
+    <ClCompile Include="Source\Component\CompPlayer.cpp">
+      <Filter>GameCode\Component\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -929,23 +734,11 @@
     <ClInclude Include="Source\SceneSystem\SceneLoading.h">
       <Filter>GameCode\Scenes\99_Load</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\CompPlayer.h">
-      <Filter>GameCode\Component\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\StateMachine\State.h">
-      <Filter>GameCode\StateMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Source\StateMachine\StateMachine.h">
       <Filter>GameCode\StateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StateMachine\AcStates.h">
-      <Filter>GameCode\StateMachine\ArmoredCore</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\CharacterManager.h">
       <Filter>GameCode\GameObject\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompEnemyAc.h">
-      <Filter>GameCode\Component\Character\Enemy\ArmoredCore</Filter>
     </ClInclude>
     <ClInclude Include="Source\BehaviorTree\ActionBase.h">
       <Filter>GameCode\BehaviorTree\System</Filter>
@@ -964,9 +757,6 @@
     </ClInclude>
     <ClInclude Include="Source\Component\CompCameraPlayer.h">
       <Filter>GameCode\Component\Camera\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompStraightBullet.h">
-      <Filter>GameCode\Component\Projectile\Straight</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\ModelResource.h">
       <Filter>Graphics\ModelResource</Filter>
@@ -995,9 +785,6 @@
     <ClInclude Include="Source\Component\CompModelBase.h">
       <Filter>GameCode\Component\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StateMachine\AcArmStates.h">
-      <Filter>GameCode\StateMachine\ArmoredCore</Filter>
-    </ClInclude>
     <ClInclude Include="Source\System\Dialog.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -1015,12 +802,6 @@
     </ClInclude>
     <ClInclude Include="Source\Graphics\TrailEffectManager.h">
       <Filter>Graphics\TrailEffect</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompGun.h">
-      <Filter>GameCode\Component\Weapons\Gun</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompSword.h">
-      <Filter>GameCode\Component\Weapons\Sword</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\Sprite2DRenderer.h">
       <Filter>Graphics\Renderer\Sprite</Filter>
@@ -1052,12 +833,6 @@
     <ClInclude Include="Source\Graphics\Shaders\SpriteShader.h">
       <Filter>Graphics\Shaders\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\CompWeaponBase.h">
-      <Filter>GameCode\Component\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompProjectileBase.h">
-      <Filter>GameCode\Component\Projectile</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component\CompCharacter.h">
       <Filter>GameCode\Component\Character</Filter>
     </ClInclude>
@@ -1085,21 +860,6 @@
     <ClInclude Include="Source\Audio\AudioSource.h">
       <Filter>System\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\CompScrollUI.h">
-      <Filter>GameCode\Component\UI\Scroll</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompArmoredCore.h">
-      <Filter>GameCode\Component\Character\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\ThrusterManager.h">
-      <Filter>GameCode\Component\Character\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompThrusterUI.h">
-      <Filter>GameCode\Component\UI\ThrusterGauge</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompThrusterBaseUI.h">
-      <Filter>GameCode\Component\UI\ThrusterGauge</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Component\CompFont.h">
       <Filter>GameCode\Component\Font</Filter>
     </ClInclude>
@@ -1109,53 +869,11 @@
     <ClInclude Include="Source\Component\CompFontNumber.h">
       <Filter>GameCode\Component\Font\Number</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\CompSightUI.h">
-      <Filter>GameCode\Component\UI\Sight</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompParticleThrusterCtr.h">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompParticleSlashCtr.h">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompParticleLandDustCtr.h">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompParticleQuickBoostCtr.h">
-      <Filter>GameCode\Component\Effect\Particle\Controller\ArmoredCore</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\EnemySupport.h">
-      <Filter>GameCode\Component\Character\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompHelicopter.h">
-      <Filter>GameCode\Component\Character\Enemy\Helicopter</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\StateMachine\HelicopterStates.h">
-      <Filter>GameCode\StateMachine\Helicopter</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics\Effect.h">
       <Filter>Graphics\Effekseer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\EffectManager.h">
       <Filter>Graphics\Effekseer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompMagazineCoverUI.h">
-      <Filter>GameCode\Component\UI\Magazine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompBooleanSprite.h">
-      <Filter>GameCode\Component\Sprite\Boolean</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompMagazineUI.h">
-      <Filter>GameCode\Component\UI\Magazine</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameSystem\ScoreManager.h">
-      <Filter>GameCode\GameSystem\ScoreManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameSystem\EnemySpawner.h">
-      <Filter>GameCode\GameSystem\EnemySpawner</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompFontTimeLimit.h">
-      <Filter>GameCode\Component\Font\TimeLimit</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scenes\SceneResult.h">
       <Filter>GameCode\Scenes\03_Result</Filter>
@@ -1172,26 +890,11 @@
     <ClInclude Include="Source\StateMachine\CameraState.h">
       <Filter>GameCode\StateMachine\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\CompStartUpScale.h">
-      <Filter>GameCode\Component\UI\StartUp\Scale</Filter>
+    <ClInclude Include="Source\StateMachine\State.h">
+      <Filter>GameCode\StateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\StartUpManager\StartUpManager.h">
-      <Filter>GameCode\StartUpManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompStartUpBase.h">
-      <Filter>GameCode\Component\UI\StartUp</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompStartUpScroll.h">
-      <Filter>GameCode\Component\UI\StartUp\TexScroll</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompParticleOneShotCtr.h">
-      <Filter>GameCode\Component\Effect\Particle\Controller\OneShot</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\StateMachine\EnemyAcStates.h">
-      <Filter>GameCode\StateMachine\EnemyAC</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Component\CompPileBunker.h">
-      <Filter>GameCode\Component\Weapons\PileBunker</Filter>
+    <ClInclude Include="Source\Component\CompPlayer.h">
+      <Filter>GameCode\Component\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

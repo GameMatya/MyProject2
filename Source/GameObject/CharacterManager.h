@@ -2,7 +2,6 @@
 
 #include "GameObject.h"
 #include "Component/CompCharacter.h"
-#include "Component/CompPlayer.h"
 #include <vector>
 
 class CharacterManager

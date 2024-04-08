@@ -3,7 +3,6 @@
 #include "SceneSystem/Scene.h"
 #include "GameObject/GameObject.h"
 #include "GameSystem/EnemySpawner.h"
-#include "StartUpManager/StartUpManager.h"
 #include "Audio/Audio.h"
 
 // タイトルシーン
@@ -39,17 +38,8 @@ private:
   // 制限時間の更新
   void UpdateTimeLimit(const float& elapsedTime);
 
-  // シーン遷移処理
-  void SceneChangeCheck();
-
 private:
   inline static SceneGame* instance;
-
-  // 敵の自動生成クラス
-  EnemySpawner enemySpawner;
-
-  // ゲーム開始の演出
-  StartUpManager startUpManager;
 
   // ゲーム開始までの待機時間
   const float TIME_STANDBY = 4.2f;

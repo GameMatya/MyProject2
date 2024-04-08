@@ -29,9 +29,6 @@ private:
 
   int transitionState = 0;
 
-  // スタートボタンを押した際の演出スプライト
-  std::weak_ptr<CompBooleanSprite> effectSprite;
-
   //オーディオ
   std::unique_ptr<AudioSource> bgm = nullptr;
 

@@ -1,4 +1,5 @@
 #include "CharacterManager.h"
+#include "Component/CompPlayer.h"
 
 void CharacterManager::RegisterCharacter(WeakObject character)
 {

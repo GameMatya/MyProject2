@@ -125,7 +125,7 @@ CameraStateRockOn::CameraStateRockOn(CompCameraPlayer* owner) :State(owner)
 
 void CameraStateRockOn::Enter()
 {
-  targetObject = owner->GetPlayer().lock()->GetAttackTarget();
+  targetObject = owner->GetPlayer().lock()->GetAttackTarget().lock()->GetGameObject();
 }
 
 void CameraStateRockOn::Execute(const float& elapsedTime)

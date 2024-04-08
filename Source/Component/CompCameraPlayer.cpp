@@ -25,13 +25,9 @@ void CompCameraPlayer::Update(const float& elapsedTime)
   oldPosition = gameObject.lock()->transform.position;
 
   UpdateDistance();
-  UpdateCameraSlope();
 
   // ステートマシンの更新
   cameraSM.Update(elapsedTime);
-
-  // UIの更新
-  UpdatePlayerUI();
 }
 
 void CompCameraPlayer::UpdateDistance()
@@ -51,31 +47,6 @@ void CompCameraPlayer::UpdateDistance()
   }
 
   distance = std::lerp(distance, nextDistance, 0.3f);
-}
-
-void CompCameraPlayer::UpdateCameraSlope()
-{
-  CompPlayer::MAIN_STATE currentState = player.lock()->GetMainSM().GetCurrentState();
-
-  if (player.lock()->GetBoostMode() == true)
-  {
-    if (currentState == CompPlayer::MAIN_STATE::MOVE) {
-
-      DirectX::XMFLOAT3 velocity = player.lock()->GetVelocity();
-      velocity.y = 0.0f;
-      float velocityRate = Mathf::Dot(velocity, velocity);
-      velocityRate = velocityRate / (player.lock()->GetMaxMoveSpeed() * player.lock()->GetMaxMoveSpeed());
-      velocityRate = min(velocityRate, 1.0f);
-
-      slopeApplyRate = std::lerp(slopeApplyRate, SLOPE_RATE_MOVE * velocityRate, 0.1f);
-      return;
-    }
-    if (currentState == CompPlayer::MAIN_STATE::QUICK_BOOST) {
-      slopeApplyRate = std::lerp(slopeApplyRate, SLOPE_RATE_BOOST, 0.1f);
-      return;
-    }
-  }
-  slopeApplyRate = std::lerp(slopeApplyRate, 0.0f, 0.1f);
 }
 
 DirectX::XMFLOAT3 CompCameraPlayer::CalcCameraUp()
@@ -99,36 +70,4 @@ DirectX::XMFLOAT3 CompCameraPlayer::CalcCameraUp()
   }
 
   return DirectX::XMFLOAT3(0.0f, 1.0f, 0.0f);
-}
-
-void CompCameraPlayer::UpdatePlayerUI()
-{
-  // 攻撃対象が居る場合、UIの位置をロックオン対象のスクリーン座標にする
-  if (player.lock()->GetAttackTarget().expired() == false) {
-    Camera& camera = Camera::Instance();
-
-    GameObject* enemy = player.lock()->GetAttackTarget().lock().get();
-    CompCharacter* compChara = enemy->GetComponent<CompCharacter>().get();
-
-    // スクリーン座標系での座標
-    DirectX::XMFLOAT3 position = enemy->transform.position;
-    position.y += compChara->GetWaistHeight();
-    DirectX::XMVECTOR ScreenPosition = DirectX::XMVector3Project(
-      DirectX::XMLoadFloat3(&position),
-      0.0f,	          //	ビューポート左上X座標
-      0.0f,	          //	ビューポート左上Y座標
-      SCREEN_WIDTH,	  //	ビューポート幅
-      SCREEN_HEIGHT,	//	ビューポート高さ
-      0.0f,	// 深度値の最小値
-      1.0f,	// 深度値の最大値
-      DirectX::XMLoadFloat4x4(&camera.GetProjection()),	//	プロジェクション行列
-      DirectX::XMLoadFloat4x4(&camera.GetView()),	//	ビュー行列
-      DirectX::XMMatrixIdentity()
-    );
-    DirectX::XMStoreFloat2(&player.lock()->uiParams.screenPos, ScreenPosition);
-  }
-  // 攻撃対象が居ない場合、スクリーンの中心にUIを配置
-  else {
-    player.lock()->uiParams.screenPos = DirectX::XMFLOAT2(SCREEN_WIDTH, SCREEN_HEIGHT) / 2.0f;
-  }
 }

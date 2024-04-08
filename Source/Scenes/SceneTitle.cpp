@@ -29,7 +29,6 @@ void SceneTitle::InitializeGameObjects()
     CompModel* model = player->AddComponent<CompModel>("./Data/Model/HeavyRobot/HeavyRobot.model", &modelRenderer).get();
     model->animator.PlayAnimation(ModelAnimator::BOTTOM, model->animator.FindAnimationId("QuickBoost_Forward"), true, 0.0f);
 
-
     // プレイヤーの右手武装
     {
       GameObject* obj = objectManager.Create(TASK_LAYER::SECOND).get();
@@ -245,7 +244,6 @@ void SceneTitle::InitializeGameObjects()
     CompParticleEmitter* comp = effect->AddComponent<CompParticleEmitter>(1500, "./Data/Sprite/Effect/particle.png", "Shader/EmitCornCS.cso").get();
 
 #pragma region パラメーター
-
     comp->SetEmitRate(1);
     comp->SetDuration(0.0f);
     comp->SetEmitInterval(0.02f);
@@ -261,48 +259,8 @@ void SceneTitle::InitializeGameObjects()
     comp->emitterData.endSpeedRate = 0.2f;
     comp->emitterData.startColor = { 0.0f,0.01f,1.0f,1.0f };
     comp->emitterData.endColor = { 0.0f,0.005f,1.0f,1.0f };
+
 #pragma endregion
-  }
-
-  // タイトルスプライト
-  {
-    GameObject* sprTitle = objectManager.Create(TASK_LAYER::FIRST).get();
-    sprTitle->SetName("Spr Title");
-    sprTitle->transform.position = { 542.1f,94.5f,0.0f };
-    sprTitle->transform.scale = { 1.15f,1.15f,0.0f };
-    sprTitle->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Text/TitleLogo.png");
-  }
-
-  // レンズゴースト
-  {
-    GameObject* sprTitle = objectManager.Create(TASK_LAYER::FIRST).get();
-    sprTitle->SetName("LensGhost");
-    auto comp = sprTitle->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Effect/LensGhost.png");
-    comp->SetBsMode(BS_MODE::ADD);
-  }
-
-  // タイトルスプライト ( Space or A  )
-  {
-    GameObject* sprTitle = objectManager.Create(TASK_LAYER::FIRST).get();
-    sprTitle->SetName("Spr PushKey");
-    sprTitle->transform.position = { 900.0f,490.4f,0.0f };
-    sprTitle->transform.scale = { 0.58f,0.58f,0.58f };
-    auto comp = sprTitle->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Text/pushkey.png");
-    comp->SetPivot(comp->GetTexSize() / 2.0f);
-    comp->SetDrawOrder(1);
-  }
-
-  // タイトルスプライト ( Space or A  )
-  {
-    GameObject* sprTitle = objectManager.Create(TASK_LAYER::FIRST).get();
-    sprTitle->SetName("Spr PushKey");
-    sprTitle->transform.position = { 900.0f,490.4f,0.0f };
-    sprTitle->transform.scale = { 0.58f,0.58f,0.58f };
-    auto comp = sprTitle->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Effect/PushKeyFlash.png");
-    comp->SetPivot(comp->GetTexSize() / 2.0f);
-    comp->SetColor({ 1.0f,1.0f,1.0f,0.0f });
-    comp->SetBsMode(BS_MODE::ADD);
-    effectSprite = sprTitle->AddComponent<CompBooleanSprite>(&pushEffect, 2.5f);
   }
 }
 
@@ -333,30 +291,6 @@ void SceneTitle::Initialize()
     LightManager::Instance().SetShadowLight(mainDirectionalLight);
   }
 
-  // ポイントライト・スポットライトの追加
-  {
-#pragma region ポイントライト
-    {
-      //for (int i = -5; i < 5; i++) {
-      //  Light* light = new Light(LightType::Point);
-      //  light->SetPosition(DirectX::XMFLOAT3(i % 3 * 5, 0.5f, 6 * (i % 5) + 5));
-      //  light->SetRange(5);
-      //  light->SetColor(DirectX::XMFLOAT4(1, i / 2, i % 5, 1));
-      //  LightManager::Instane().Register(light);
-      //}
-    }
-#pragma endregion
-#pragma region スポットライト
-    //{
-    //  Light* light = new Light(LightType::Spot);
-    //  light->SetPosition(DirectX::XMFLOAT3(0, 0.5f, -1));
-    //  light->SetRange(5);
-    //  light->SetColor(DirectX::XMFLOAT4(1, 1, 1, 1));
-    //  LightManager::Instane().Register(light);
-    //}
-#pragma endregion
-  }
-
   // ポストプロセス
   {
     Graphics& graphics = Graphics::Instance();
@@ -385,38 +319,6 @@ void SceneTitle::Finalize()
 void SceneTitle::Update(const float& elapsedTime)
 {
   objectManager.Update(elapsedTime);
-
-  // 画面遷移 処理
-  switch (transitionState) {
-  case 0:
-    // スタート入力待ち
-    if (Input::Instance().GetGamePad().GetButtonDown(GamePad::BTN_A)) {
-      pushEffect = true;
-
-      transitionState++;
-    }
-
-    break;
-  case 1:
-    if (effectSprite.lock()->GetIsDisplay() == true) {
-      pushEffect = false;
-    }
-    else if (effectSprite.lock()->GetDisplayValue() == 0.0f) {
-      transitionState++;
-    }
-
-    break;
-  case 2:
-    if (GetFadeOutFlag() == false) {
-      SwitchFade();
-    }
-    else if (fadeSprite.lock()->GetIsDisplay() == true) {
-      SceneManager::Instance().ChangeScene(new SceneLoading(new SceneGame));
-    }
-
-    break;
-  }
-
 }
 
 #ifdef _DEBUG

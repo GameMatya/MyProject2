@@ -13,8 +13,8 @@
 #include "Graphics/Light.h"
 
 #include "GameObject/GameObjectManager.h"
-
-#include "Component/CompBooleanSprite.h"
+#include "Audio/Audio.h"
+#include "Audio/AudioSource.h"
 
 class Scene
 {
@@ -42,8 +42,6 @@ public:
   // 描画処理
   void Render();
 
-  void SwitchFade() { fadeOutFlag = !fadeOutFlag; }
-
   // 準備完了設定 (マルチスレッド)
   void SetReady() { isReady = true; }
 
@@ -57,7 +55,6 @@ public:
   Sprite2DRenderer& GetSprite2DRenderer() { return sprite2DRenderer; }
   Sprite3DRenderer& GetSprite3DRenderer() { return sprite3DRenderer; }
   GameObjectManager& GetGameObjectManager() { return objectManager; }
-  bool GetFadeOutFlag() { return fadeOutFlag; }
 
 protected:
 #ifdef _DEBUG
@@ -78,14 +75,8 @@ protected:
   std::vector<PostShader*>  postShaders;
   PostProcessContext        postContext;
 
-  // フェードイン・アウト用のスプライト
-  std::weak_ptr<CompBooleanSprite> fadeSprite;
-
 private:
   // マルチスレッドの完了フラグ
   bool isReady = false;
-
-  // フェードイン・アウトのフラグ
-  bool fadeOutFlag = false;
 
 };

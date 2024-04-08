@@ -39,8 +39,6 @@ public:
 
 private:
   void UpdateDistance();
-  void UpdateCameraSlope();
-  void UpdatePlayerUI();
 
 private:
   std::weak_ptr<CompPlayer> player;
