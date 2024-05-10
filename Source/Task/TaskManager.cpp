@@ -40,7 +40,7 @@ void TaskManager::Update(const float& elapsedTime)
     }
 
     // 待機スレッドを起こす
-    condition.notify_one();
+    condition.notify_all();
 
     while (true) {
       Task* task = nullptr;
