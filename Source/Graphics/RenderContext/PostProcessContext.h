@@ -68,7 +68,7 @@ struct PostProcessContext
   GaussianFilterData			gaussianFilterData;
 
   //	 ‚‹P“x’Šo—pî•ñ
-  LuminanceExtractionData	luminanceExtractionData;
+  LuminanceExtractionData	bloomData;
 
   // ü•ÓŒ¸Œõî•ñ
   VignettingData		      vignettingData;

@@ -122,9 +122,9 @@ void Scene::Render()
   {
     if (ImGui::TreeNode("Bloom"))
     {
-      ImGui::SliderFloat("Max Luminance", &postContext.luminanceExtractionData.maxLuminance, 5.0f, 20.0f);
-      ImGui::SliderFloat("threshold", &postContext.luminanceExtractionData.threshold, 0.0f, postContext.luminanceExtractionData.maxLuminance);
-      ImGui::SliderFloat("intensity", &postContext.luminanceExtractionData.intensity, 0.0f, 10.0f);
+      ImGui::SliderFloat("Max Luminance", &postContext.bloomData.maxLuminance, 5.0f, 20.0f);
+      ImGui::SliderFloat("threshold", &postContext.bloomData.threshold, 0.0f, postContext.bloomData.maxLuminance);
+      ImGui::SliderFloat("intensity", &postContext.bloomData.intensity, 0.0f, 10.0f);
       ImGui::SliderFloat("deviation", &postContext.gaussianFilterData.deviation, 0.1f, 50.0f);
       ImGui::TreePop();
     }

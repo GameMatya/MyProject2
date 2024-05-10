@@ -50,9 +50,9 @@ void PostShader::UpdatePostConstant(ID3D11DeviceContext* dc, const PostProcessCo
 {
   // 定数バッファ更新
   CbPostProcess cbPost;
-  cbPost.luminance.intensity = ppc.luminanceExtractionData.intensity;
-  cbPost.luminance.threshold = ppc.luminanceExtractionData.threshold;
-  cbPost.luminance.maxLuminance = ppc.luminanceExtractionData.maxLuminance;
+  cbPost.luminance.intensity = ppc.bloomData.intensity;
+  cbPost.luminance.threshold = ppc.bloomData.threshold;
+  cbPost.luminance.maxLuminance = ppc.bloomData.maxLuminance;
 
   cbPost.colorGrading.hueShift = ppc.colorGradingData.hueShift;
   cbPost.colorGrading.saturation = ppc.colorGradingData.saturation;

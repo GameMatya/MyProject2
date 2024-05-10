@@ -40,9 +40,9 @@ public:
   DirectX::XMFLOAT3 scale = { 1,1,1 };
 
   // 各方向ベクトル
-  DirectX::XMFLOAT3 right;
-  DirectX::XMFLOAT3 up;
-  DirectX::XMFLOAT3 forward;
+  DirectX::XMFLOAT3 right = {};
+  DirectX::XMFLOAT3 up = {};
+  DirectX::XMFLOAT3 forward = {};
 
 private:
   // 持ち主

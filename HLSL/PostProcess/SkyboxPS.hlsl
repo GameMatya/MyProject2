@@ -1,9 +1,12 @@
 #include "Skybox.hlsli"
+#include "FilterFunctions.hlsli"
 
 // pow関数に負の値が入る可能性を報告する警告を無効化
 #pragma warning (disable : 3571)
 
 Texture2D skybox : register(t10);
+
+const float LUMINANCE_OFFSET = -0.5;
 
 float4 main(VS_OUT pin) : SV_TARGET
 {
@@ -27,6 +30,12 @@ float4 main(VS_OUT pin) : SV_TARGET
     float3 color = skybox.SampleLevel(samplerStates[WRAP_ANISOTROPIC], sample_point, 0).rgb;
 	// リニア色空間に変換 (トーンマッピングでsRGB色空間に変換される)
     color = pow(color, GAMMA);
+	
+	// 輝度を求める
+    float luminance = RGB2Luminance(color);
+	
+	// 輝度が小さいほどColorを大きくしていく ( デフォルトだと太陽と空で輝度の差が大きすぎるため調整 )
+    color += color * pow(luminance, LUMINANCE_OFFSET);
 	
     return float4(color, 1);
 }

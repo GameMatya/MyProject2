@@ -37,30 +37,41 @@ void SceneGame::InitializeGameObjects()
     SharedObject player = objectManager.Create(TASK_LAYER::FIRST);
     player->SetName("Player");
     player->transform.position = { 44.16f ,0.17f, -51.6f };
-    player->transform.scale = { 0.002f,0.002f,0.002f };
+    player->transform.scale = { 0.06f,0.06f,0.06f };
     player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
     player->SetPushPower(10.0f);
     weakPlayer = player->AddComponent<CompPlayer>();
     compPlayer = weakPlayer.lock().get();
-    CompModel* model = player->AddComponent<CompModel>("./Data/Model/HeavyRobot/HeavyRobot.model", &modelRenderer).get();
-    model->AddCompCollisions(); 
+    CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
+    model->AddCompCollisions();
+
+    // カメラ
+    {
+      GameObject* obj = objectManager.Create(TASK_LAYER::SECOND).get();
+      obj->SetName("Camera");
+      CompCameraFree* camera = obj->AddComponent<CompCameraFree>().get();
+      camera->SetTargetFocus({ 54.4f,9.75f,4.91f });
+      camera->SetTargetEye({ 53.4f,9.56f,5.3f });
+      camera->SetAngle({ -0.17f,-1.13f,0 });
+      camera->SetDistance(1.08f);
+    }
   }
 
   // ステージ
   {
     GameObject* stage = objectManager.Create(TASK_LAYER::NONE, true).get();
-    CompStaticModel* cModel = stage->AddComponent<CompStaticModel>("./Data/Model/Environment/environment.StaticModel", &modelRenderer).get();
-    stage->AddComponent<CompStage>("./Data/Model/Environment/LowPolygon.StaticModel");
-    stage->transform.scale = { 1.2f,1.2f,1.2f };
+    CompStaticModel* cModel = stage->AddComponent<CompStaticModel>("./Data/Model/Environment/SnowMountain.StaticModel", &modelRenderer).get();
+    stage->AddComponent<CompStage>("./Data/Model/Environment/SnowMountainRayCollision.StaticModel");
+    stage->transform.scale = { 0.9f,0.9f,0.9f };
   }
 
-  // 周辺減光 ( スプライト )
-  {
-    GameObject* vignette = objectManager.Create(TASK_LAYER::NONE).get();
-    CompSprite2D* sprite = vignette->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Effect/vignette.png").get();
-    sprite->SetBsMode(BS_MODE::MULTIPLY);
-    sprite->SetDrawOrder(-1);
-  }
+  //// 周辺減光 ( スプライト )
+  //{
+  //  GameObject* vignette = objectManager.Create(TASK_LAYER::NONE).get();
+  //  CompSprite2D* sprite = vignette->AddComponent<CompSprite2D>(&sprite2DRenderer, "./Data/Sprite/Effect/vignette.png").get();
+  //  sprite->SetBsMode(BS_MODE::MULTIPLY);
+  //  sprite->SetDrawOrder(-1);
+  //}
 }
 
 void SceneGame::Initialize()
@@ -78,8 +89,8 @@ void SceneGame::Initialize()
     camera.SetPerspectiveFov(
       DirectX::XMConvertToRadians(45),
       graphics.GetScreenWidth() / static_cast<float>(graphics.GetScreenHeight()),
-      0.1f,
-      500.0f
+      1.0f,
+      5000.0f
     );
   }
 
@@ -89,7 +100,7 @@ void SceneGame::Initialize()
   {
     Light* mainDirectionalLight = new Light(LightType::Directional);
     mainDirectionalLight->SetDirection({ -0.5f, -0.5f, 0 });
-    mainDirectionalLight->SetColor(DirectX::XMFLOAT4(1, 0.393f, 0.158f, 1));
+    mainDirectionalLight->SetColor(DirectX::XMFLOAT4(0.93f, 0.96f, 1.0f, 1));
     LightManager::Instance().Register(mainDirectionalLight);
     LightManager::Instance().SetShadowLight(mainDirectionalLight);
   }
@@ -122,19 +133,20 @@ void SceneGame::Initialize()
   {
     postShaders = {
       graphics.GetShader(SHADER_ID_POST::COLOR_GRADING),
-      graphics.GetShader(SHADER_ID_POST::DISTANCE_FOG),
+      //graphics.GetShader(SHADER_ID_POST::DISTANCE_FOG),
     };
 
     postContext.colorGradingData.saturation = 0.9f;
-    postContext.distanceFogData.color = { 0.32f,0.03f,0,0.05f };
+    postContext.bloomData.threshold = 1.4f;
+    //postContext.distanceFogData.color = { 0.32f,0.03f,0,0.05f };
   }
 
 #pragma endregion
 
-  // オーディオ
-  bgm = Audio::Instance().LoadAudioSource("Data/Audio/BGM/GameBGM.wav");
-  bgm->Play(true);
-  bgm->setVolume(0.2f);
+  //// オーディオ
+  //bgm = Audio::Instance().LoadAudioSource("Data/Audio/BGM/GameBGM.wav");
+  //bgm->Play(true);
+  //bgm->setVolume(0.2f);
 }
 
 void SceneGame::Finalize()
@@ -144,7 +156,7 @@ void SceneGame::Finalize()
 
   instance = nullptr;
 
-  bgm->Stop();
+  //bgm->Stop();
 }
 
 void SceneGame::Update(const float& elapsedTime)

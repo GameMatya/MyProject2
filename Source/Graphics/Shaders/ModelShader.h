@@ -29,7 +29,7 @@ protected:
   HRESULT createVsFromCso(ID3D11Device* device, const char* cso_name, ID3D11VertexShader** vertex_shader)override;
 
 protected:
-  static const int MAX_BONES = 128;
+  static const int MAX_BONES = 160;
   struct CbMesh
   {
     DirectX::XMFLOAT4X4	boneTransforms[MAX_BONES];

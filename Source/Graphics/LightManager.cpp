@@ -30,7 +30,7 @@ LightManager::LightManager()
   dc->DSSetConstantBuffers(8, 1, lightCb.GetAddressOf());
 
   // スカイマップ読み込み
-  ReloadSkyMap(dc, graphics.GetDevice(), "UnearthlyRed4k");
+  ReloadSkyMap(dc, graphics.GetDevice(), "kloofendal_43d_clear_puresky_2k");
 }
 
 LightManager::~LightManager()

@@ -5,7 +5,7 @@
 Texture2D sceneTexture : register(t0);
 
 // ç≈ëÂãPìx
-static const float MAX_LUMINANCE = 2.6;
+static const float MAX_LUMINANCE = 0.4;
 
 float4 main(VS_OUT pin) : SV_TARGET
 {

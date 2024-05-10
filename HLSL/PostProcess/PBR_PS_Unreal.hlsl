@@ -5,17 +5,17 @@
 #include "PostProcessDefault.hlsli"
 #include "../ShadowUtility.hlsli"
 
-Texture2D   colorMap        : register(t0);
-Texture2D   normalMap       : register(t1); // 法線マップ
-Texture2D   positionMap     : register(t2); // 位置マップ
-Texture2D   MRAO_Map        : register(t3); // メタリックラフネス環境遮蔽マップ
-Texture2D   emissiveMap     : register(t4); // 自己発光マップ
-Texture2D   depthMap        : register(t5); // 深度マップ
+Texture2D colorMap : register(t0);
+Texture2D normalMap : register(t1); // 法線マップ
+Texture2D positionMap : register(t2); // 位置マップ
+Texture2D MRAO_Map : register(t3); // メタリックラフネス環境遮蔽マップ
+Texture2D emissiveMap : register(t4); // 自己発光マップ
+Texture2D depthMap : register(t5); // 深度マップ
                                               
-Texture2D   skybox          : register(t10); // スカイボックス
-TextureCube diffuseIem      : register(t11); // プレフィルタリング済スカイボックス(Diffuse)
-TextureCube specularPmrem   : register(t12); // プレフィルタリング済スカイボックス(Specular)
-Texture2D   lutGGX          : register(t13); // スカイボックスの色対応表
+Texture2D skybox : register(t10); // スカイボックス
+TextureCube diffuseIem : register(t11); // プレフィルタリング済スカイボックス(Diffuse)
+TextureCube specularPmrem : register(t12); // プレフィルタリング済スカイボックス(Specular)
+Texture2D lutGGX : register(t13); // スカイボックスの色対応表
 
 static const float MAX_EMISSIVE = 8.0;
 
