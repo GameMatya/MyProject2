@@ -17,7 +17,7 @@ TextureCube diffuseIem : register(t11); // プレフィルタリング済スカイボックス(Di
 TextureCube specularPmrem : register(t12); // プレフィルタリング済スカイボックス(Specular)
 Texture2D lutGGX : register(t13); // スカイボックスの色対応表
 
-static const float MAX_EMISSIVE = 8.0;
+static const float MAX_EMISSIVE_POWER = 10.0; // エミッシブテクスチャのアルファ値が1だった際の発光パワー
 
 float4 main(VS_OUT pin) : SV_TARGET
 {
@@ -85,13 +85,12 @@ float4 main(VS_OUT pin) : SV_TARGET
     }
     
     // エミッシブ
-    float3 emissiveColor = albedoColor.rgb;
+    float4 emissiveColor = 0;
     {
-        float emissivePower = emissiveMap.Sample(samplerStates[BORDER_POINT], pin.texcoord).r * MAX_EMISSIVE;
-        emissiveColor *= emissivePower;
+        emissiveColor = emissiveMap.Sample(samplerStates[BORDER_POINT], pin.texcoord);
+        emissiveColor.rgb *= emissiveColor.a * MAX_EMISSIVE_POWER;
     }
     
-    float3 color = emissiveColor + directionColor + envColor * MRAO.z;
-    
+    float3 color = emissiveColor.rgb + directionColor + envColor * MRAO.z;
     return float4(color, 1);
 }

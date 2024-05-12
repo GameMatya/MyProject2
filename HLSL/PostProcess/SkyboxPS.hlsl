@@ -6,8 +6,6 @@
 
 Texture2D skybox : register(t10);
 
-const float LUMINANCE_OFFSET = -0.5;
-
 float4 main(VS_OUT pin) : SV_TARGET
 {
 	// カメラからワールド座標へのベクトル
@@ -35,7 +33,8 @@ float4 main(VS_OUT pin) : SV_TARGET
     float luminance = RGB2Luminance(color);
 	
 	// 輝度が小さいほどColorを大きくしていく ( デフォルトだと太陽と空で輝度の差が大きすぎるため調整 )
-    color += color * pow(luminance, LUMINANCE_OFFSET);
+    const float LUMINANCE_OFFSET = 0.1f;
+    color += color * (LUMINANCE_OFFSET / luminance);
 	
     return float4(color, 1);
 }
