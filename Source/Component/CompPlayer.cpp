@@ -12,6 +12,10 @@
 
 void CompPlayer::Start()
 {
+  CompCharacter::Start();
+
+  // マネージャーに自身を登録
+  gameObject.lock()->GetObjectManager()->GetCharacterManager().RegisterPlayer(gameObject);
 }
 
 void CompPlayer::Update(const float& elapsedTime)

@@ -40,7 +40,7 @@ void SceneGame::InitializeGameObjects()
     player->transform.scale = { 0.01f,0.01f,0.01f };
     //player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
     player->SetPushPower(10.0f);
-    //weakPlayer = player->AddComponent<CompPlayer>();
+    weakPlayer = player->AddComponent<CompPlayer>();
     //compPlayer = weakPlayer.lock().get();
     CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
     model->AddCompCollisions();

@@ -486,6 +486,7 @@ DirectX::XMFLOAT3 ModelAnimator::CalculateRootNodePos(const float& animationTime
     }
   }
 
+  assert(!"RootMotionError");
   return DirectX::XMFLOAT3(0, 0, 0);
 }
 

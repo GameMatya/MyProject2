@@ -6,14 +6,11 @@
 #include "imgui.h"
 #include <algorithm>
 
-CompCharacter::CompCharacter()
-{
-}
-
 void CompCharacter::Start()
 {
   model = gameObject.lock()->GetComponent<CompModel>().get();
 
+  // ModelResourceからキャラクターデータを読み込む
   SettingCharacterDatas();
 
   // マネージャーに自身を登録

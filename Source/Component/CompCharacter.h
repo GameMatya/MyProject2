@@ -13,7 +13,7 @@
 class CompCharacter :public Component
 {
 public:
-  CompCharacter();
+  CompCharacter() {};
 
   virtual void Start()override;
 
