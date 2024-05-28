@@ -8,8 +8,6 @@
 
 CompCharacter::CompCharacter()
 {
-  if (hitEffect.use_count() == 0)
-    hitEffect = EffectManager::Instance().LoadEffekseer("./Data/Effekseer/Hit.efk");
 }
 
 void CompCharacter::Start()
@@ -189,10 +187,6 @@ void CompCharacter::DrawImGui()
 
 void CompCharacter::OnDamaged()
 {
-  hitEffect->Play(
-    GetGameObject()->transform.position + DirectX::XMFLOAT3(0, waistHeight, 0), // 座標 + 腰までの高さ
-    0.3f // スケール
-  );
 }
 
 void CompCharacter::UpdateInvincibleTimer(const float& elapsedTime)
@@ -207,13 +201,10 @@ void CompCharacter::SettingCharacterDatas()
 {
   const ModelResource::CharacterData& data = model->GetResource()->GetCharacterData();
 
-  // 腕ノードのエリアを読み込む
+  // 腰ノードを読み込む
   {
-    if (data.armNodes[0].x > 0)
-      model->animator.SetSplitID(ModelAnimator::ANIM_AREA::ARM_RIGHT, data.armNodes[0].x, data.armNodes[0].y);
-
-    if (data.armNodes[1].x > 0)
-      model->animator.SetSplitID(ModelAnimator::ANIM_AREA::ARM_LEFT, data.armNodes[1].x, data.armNodes[1].y);
+    if (data.spineNodeId > 0)
+      model->animator.SetSplitID(data.spineNodeId);
   }
 
   // 押し出しの強さを設定
@@ -420,15 +411,4 @@ void CompCharacter::UpdateHorizontalMove(const float& elapsedTime)
       gameObject.lock()->transform.position.z += mz;
     }
   }
-
-  // 場外防止
-  FieldOutCheck();
-}
-
-void CompCharacter::FieldOutCheck()
-{
-  DirectX::XMFLOAT3& position = gameObject.lock()->transform.position;
-
-  position.x = std::clamp(position.x, -FIELD_SIZE, FIELD_SIZE);
-  position.z = std::clamp(position.z, -FIELD_SIZE, FIELD_SIZE);
 }

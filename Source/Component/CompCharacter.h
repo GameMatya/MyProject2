@@ -5,8 +5,8 @@
 #include "Graphics/Effect.h"
 #include "Math/OriginMath.h"
 
-// AC6のルビコン星の重力を参考
-#define GRAVITY (0.68f)
+// 地球の重力
+#define GRAVITY (0.98f)
 // 最大落下速度
 #define MAX_FALL_SPEED (-30.0f)
 
@@ -44,12 +44,12 @@ public:
   void AddImpulse(const DirectX::XMFLOAT3& impulse);
 
 #pragma region ゲッター・セッター
-  CompModel* GetModel() { return model; }
-  const float& GetMoveSpeed()  const { return moveSpeed; }
-  const float& GetMaxMoveSpeed()  const { return maxMoveSpeed; }
-  const float& GetJumpSpeed()  const { return jumpSpeed; }
-  const float& GetTurnSpeed()  const { return turnSpeed; }
-  const bool& GetIsGround()   const { return isGround; }
+  CompModel*    GetModel() { return model; }
+  const float&  GetMoveSpeed()  const { return moveSpeed; }
+  const float&  GetMaxMoveSpeed()  const { return maxMoveSpeed; }
+  const float&  GetJumpSpeed()  const { return jumpSpeed; }
+  const float&  GetTurnSpeed()  const { return turnSpeed; }
+  const bool&   GetIsGround()   const { return isGround; }
   const DirectX::XMFLOAT3& GetMoveVecXZ() const { return moveVecXZ; }
   const DirectX::XMFLOAT3& GetVelocity() const { return velocity; }
   const float& GetWaistHeight() const { return waistHeight; }
@@ -91,12 +91,8 @@ private:
   // 水平移動更新処理
   void UpdateHorizontalMove(const float& elapsedTime);
 
-  // 場外に行かないようにする
-  void FieldOutCheck();
-
 protected:
   CompModel* model = nullptr;
-  inline static std::shared_ptr<Effect> hitEffect = nullptr;
 
   // 体力
   float MaxHealth = 1;
@@ -139,8 +135,5 @@ protected:
   DirectX::XMFLOAT3 velocity = {};
 
 #pragma endregion
-
-private:
-  const float FIELD_SIZE = 70.0f;
 
 };

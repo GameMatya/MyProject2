@@ -27,30 +27,31 @@
 #include "Graphics/EffectManager.h"
 
 using namespace DirectX;
-
+SharedObject player;
 void SceneGame::InitializeGameObjects()
 {
   // プレイヤーの生成
   CompPlayer* compPlayer = nullptr;
   std::weak_ptr<CompPlayer> weakPlayer;
   {
-    SharedObject player = objectManager.Create(TASK_LAYER::FIRST);
+    player = objectManager.Create(TASK_LAYER::FIRST);
     player->SetName("Player");
-    player->transform.position = { 44.16f ,0.17f, -51.6f };
-    player->transform.scale = { 0.06f,0.06f,0.06f };
-    player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
+    //player->transform.position = { 44.16f ,0.17f, -51.6f };
+    player->transform.scale = { 0.01f,0.01f,0.01f };
+    //player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
     player->SetPushPower(10.0f);
-    weakPlayer = player->AddComponent<CompPlayer>();
-    compPlayer = weakPlayer.lock().get();
+    //weakPlayer = player->AddComponent<CompPlayer>();
+    //compPlayer = weakPlayer.lock().get();
     CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
     model->AddCompCollisions();
+    model->animator.PlayAnimation(ModelAnimator::ANIM_AREA::BOTTOM, model->animator.FindAnimationId("AxeAttack_Charge"), true);
 
     // カメラ
     {
       GameObject* obj = objectManager.Create(TASK_LAYER::SECOND).get();
       obj->SetName("Camera");
       CompCameraFree* camera = obj->AddComponent<CompCameraFree>().get();
-      camera->SetTargetFocus({ 54.4f,9.75f,4.91f });
+      camera->SetTargetFocus({ -7.0f,9.75f,10.91f });
       camera->SetTargetEye({ 53.4f,9.56f,5.3f });
       camera->SetAngle({ -0.17f,-1.13f,0 });
       camera->SetDistance(1.08f);
@@ -159,10 +160,16 @@ void SceneGame::Finalize()
   //bgm->Stop();
 }
 
+#include "System/Input.h"
 void SceneGame::Update(const float& elapsedTime)
 {
   // ゲームオブジェクトの更新
   objectManager.Update(elapsedTime);
+
+  if (Input::Instance().GetGamePad().GetButtonDown(Input::Instance().GetGamePad().BTN_A)) {
+    CompModel* model = player->GetComponent<CompModel>().get();
+    model->animator.PlayAnimation(ModelAnimator::ANIM_AREA::BOTTOM,0, false);
+  }
 
   // 制限時間の更新
   UpdateTimeLimit(elapsedTime);

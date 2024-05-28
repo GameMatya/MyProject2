@@ -188,7 +188,7 @@ void ModelResource::CharacterData::serialize(Archive& archive, int version)
   archive(
     CEREAL_NVP(waistHeight),
     CEREAL_NVP(pushPower),
-    CEREAL_NVP(armNodes)
+    CEREAL_NVP(spineNodeId)
   );
 }
 

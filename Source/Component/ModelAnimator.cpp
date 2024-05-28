@@ -11,18 +11,18 @@ void ModelAnimator::UpdateAnimations(const float& elapsedTime)
   // 下半身2アニメーション
   UpdateAnimationBottomSub(elapsedTime);
 
+  ApplyRootMotion();
+
   // 再生時間の更新
   UpdateAnimationSecond(elapsedTime, ANIM_AREA::BOTTOM);
 
   // 上半身にアニメーション番号が割り当てられていたら
-  if (currentAnimeIndex[ANIM_AREA::ARM_RIGHT] >= 0 || currentAnimeIndex[ANIM_AREA::ARM_LEFT] >= 0) {
+  if (currentAnimeIndex[ANIM_AREA::UPPER] >= 0) {
     // 上半身のアニメーション
-    UpdateAnimation(elapsedTime, ANIM_AREA::ARM_RIGHT);
-    UpdateAnimation(elapsedTime, ANIM_AREA::ARM_LEFT);
+    UpdateAnimation(elapsedTime, ANIM_AREA::UPPER);
 
     // 再生時間の更新
-    UpdateAnimationSecond(elapsedTime, ANIM_AREA::ARM_RIGHT);
-    UpdateAnimationSecond(elapsedTime, ANIM_AREA::ARM_LEFT);
+    UpdateAnimationSecond(elapsedTime, ANIM_AREA::UPPER);
   }
 }
 
@@ -31,25 +31,25 @@ void ModelAnimator::DrawImGui()
   if (ImGui::TreeNode("Index")) {
     ImGui::Text((std::string("AnimationID Bottom : ") + std::to_string(currentAnimeIndex[ANIM_AREA::BOTTOM])).c_str());
     ImGui::Text((std::string("AnimationID BottomSub : ") + std::to_string(currentAnimeIndex[ANIM_AREA::BOTTOM_SUB])).c_str());
-    ImGui::Text((std::string("AnimationID Upper : ") + std::to_string(currentAnimeIndex[ANIM_AREA::ARM_RIGHT])).c_str());
+    ImGui::Text((std::string("AnimationID Upper : ") + std::to_string(currentAnimeIndex[ANIM_AREA::UPPER])).c_str());
 
     ImGui::TreePop();
   }
   if (ImGui::TreeNode("Speed")) {
     ImGui::Text((std::string("Speed Bottom : ") + std::to_string(animeSpeed[ModelAnimator::ANIM_AREA::BOTTOM])).c_str());
-    ImGui::Text((std::string("Speed Upper : ") + std::to_string(animeSpeed[ModelAnimator::ANIM_AREA::ARM_RIGHT])).c_str());
+    ImGui::Text((std::string("Speed Upper : ") + std::to_string(animeSpeed[ModelAnimator::ANIM_AREA::UPPER])).c_str());
 
     ImGui::TreePop();
   }
   if (ImGui::TreeNode("Second")) {
     ImGui::Text((std::string("CurrentSecond Bottom : ") + std::to_string(currentAnimeSeconds[ModelAnimator::ANIM_AREA::BOTTOM])).c_str());
-    ImGui::Text((std::string("CurrentSecond Upper : ") + std::to_string(currentAnimeSeconds[ModelAnimator::ANIM_AREA::ARM_RIGHT])).c_str());
+    ImGui::Text((std::string("CurrentSecond Upper : ") + std::to_string(currentAnimeSeconds[ModelAnimator::ANIM_AREA::UPPER])).c_str());
 
     ImGui::TreePop();
   }
   if (ImGui::TreeNode("Frame")) {
     int currentFrameB = static_cast<int>(currentAnimeSeconds[ModelAnimator::ANIM_AREA::BOTTOM] * 60.0f);
-    int currentFrameU = static_cast<int>(currentAnimeSeconds[ModelAnimator::ANIM_AREA::ARM_RIGHT] * 60.0f);
+    int currentFrameU = static_cast<int>(currentAnimeSeconds[ModelAnimator::ANIM_AREA::UPPER] * 60.0f);
 
     ImGui::Text((std::string("CurrentFrame Bottom : ") + std::to_string(currentFrameB)).c_str());
     ImGui::Text((std::string("CurrentFrame Upper : ") + std::to_string(currentFrameU)).c_str());
@@ -58,7 +58,7 @@ void ModelAnimator::DrawImGui()
   }
   if (ImGui::TreeNode("Blend")) {
     ImGui::Text((std::string("BlendTime Bottom : ") + std::to_string(animeBlendTimer[ModelAnimator::ANIM_AREA::BOTTOM])).c_str());
-    ImGui::Text((std::string("BlendTime Upper : ") + std::to_string(animeBlendTimer[ModelAnimator::ANIM_AREA::ARM_RIGHT])).c_str());
+    ImGui::Text((std::string("BlendTime Upper : ") + std::to_string(animeBlendTimer[ModelAnimator::ANIM_AREA::UPPER])).c_str());
 
     ImGui::TreePop();
   }
@@ -99,9 +99,8 @@ void ModelAnimator::UpdateAnimation(const float& elapsedTime, const ANIM_AREA& b
   int endIndex = (int)model->nodes.size();
 
   // 処理するエリアが腕なら、腕の範囲だけアニメーションする
-  if (bodyArea != ANIM_AREA::BOTTOM) {
-    startIndex = splitNodeId[bodyArea - 1].x;
-    endIndex = splitNodeId[bodyArea - 1].y;
+  if (bodyArea == ANIM_AREA::UPPER) {
+    startIndex = splitNodeId;
   }
 
   for (int keyIndex = 0; keyIndex < keyCount - 1; ++keyIndex)
@@ -123,18 +122,11 @@ void ModelAnimator::UpdateAnimation(const float& elapsedTime, const ANIM_AREA& b
     for (int nodeIndex = startIndex; nodeIndex < endIndex; ++nodeIndex)
     {
       if (bodyArea == ANIM_AREA::BOTTOM) {
-        // 腕がアニメーション中だったら
-        if (currentAnimeIndex[ANIM_AREA::ARM_RIGHT] >= 0) // 右腕
+        // 上半身がアニメーション中だったら
+        if (IsPlayAnimation(ANIM_AREA::UPPER) == true)
         {
           // ノードの更新スキップ
-          if (nodeIndex >= splitNodeId[ANIM_AREA::ARM_RIGHT - 1].x &&
-            nodeIndex < splitNodeId[ANIM_AREA::ARM_RIGHT - 1].y)
-            continue;
-        }
-        if (currentAnimeIndex[ANIM_AREA::ARM_LEFT] >= 0) // 左腕
-        {
-          if (nodeIndex >= splitNodeId[ANIM_AREA::ARM_LEFT - 1].x &&
-            nodeIndex < splitNodeId[ANIM_AREA::ARM_LEFT - 1].y)
+          if (nodeIndex >= splitNodeId)
             continue;
         }
       }
@@ -252,16 +244,11 @@ void ModelAnimator::UpdateAnimationBottomSub(const float& elapsedTime)
     // キーフレームの姿勢になるように補完する
     for (int nodeIndex = startIndex; nodeIndex < endIndex; ++nodeIndex)
     {
-      // 腕がアニメーション中だったら
-      if (currentAnimeIndex[ANIM_AREA::ARM_RIGHT] >= 0 || currentAnimeIndex[ANIM_AREA::ARM_LEFT] >= 0)
+      // 上半身がアニメーション中だったら
+      if (IsPlayAnimation(ANIM_AREA::UPPER) == true)
       {
         // ノードの更新スキップ
-        if (nodeIndex >= splitNodeId[ANIM_AREA::ARM_RIGHT - 1].x &&
-          nodeIndex < splitNodeId[ANIM_AREA::ARM_RIGHT - 1].y)
-          continue;
-
-        else if (nodeIndex >= splitNodeId[ANIM_AREA::ARM_LEFT - 1].x &&
-          nodeIndex < splitNodeId[ANIM_AREA::ARM_LEFT - 1].y)
+        if (nodeIndex >= splitNodeId)
           continue;
       }
 
@@ -367,6 +354,11 @@ void ModelAnimator::UpdateAnimationSecond(const float& elapsedTime, const ANIM_A
   const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
   const ModelResource::Animation& animation = animations.at(currentAnimeIndex[area]);
 
+  // 前フレームのアニメーション時間を保存 ( ルートモーション用 )
+  if (area == ANIM_AREA::BOTTOM) {
+    oldAnimationSecond = currentAnimeSeconds[area];
+  }
+
   // 時間経過
   currentAnimeSeconds[area] += elapsedTime * animeSpeed[area];
 
@@ -383,9 +375,118 @@ void ModelAnimator::UpdateAnimationSecond(const float& elapsedTime, const ANIM_A
     {
       // アニメーションの終了
       animeEndFlag[area] = true;
+      oldAnimationSecond = 0.0f;
       return;
     }
   }
+}
+
+void ModelAnimator::ApplyRootMotion()
+{
+  if (!IsPlayAnimation(ANIM_AREA::BOTTOM))return;
+
+  // 初回、前回、今回のルートモーションノードの姿勢を取得
+  DirectX::XMFLOAT3 beginPos, oldPos, newPos;
+  beginPos = CalculateRootNodePos(0.0f);
+  oldPos = CalculateRootNodePos(oldAnimationSecond);
+  newPos = CalculateRootNodePos(currentAnimeSeconds[ANIM_AREA::BOTTOM]);
+
+  // ローカル空間で差分を求める
+  DirectX::XMFLOAT3 localTranslation = {};
+
+  // 現在のアニメーション時間が、前のフレームのアニメーション時間より小さい場合 ( ループアニメーション )
+  if (currentAnimeSeconds[ANIM_AREA::BOTTOM] < oldAnimationSecond)
+  {
+    const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
+    const ModelResource::Animation& animation = animations.at(currentAnimeIndex[ANIM_AREA::BOTTOM]);
+
+    // 終端の姿勢を取り出す
+    DirectX::XMFLOAT3 endPos;
+    // float誤差を考慮し、0.001fだけ減らす
+    endPos = CalculateRootNodePos(animation.secondsLength - 0.001f);
+
+    // 前回->終端の移動差分値を算出する
+    DirectX::XMFLOAT3 old_endTranslation, begin_newTranslation;
+    old_endTranslation = endPos - oldPos;
+
+    // 初回->今回の移動差分値を算出する
+    begin_newTranslation = newPos - beginPos;
+
+    // 算出した移動差分値の合計値をローカル移動差分値として扱う
+    localTranslation = old_endTranslation + begin_newTranslation;
+  }
+  else
+  {
+    localTranslation = newPos - oldPos;
+  }
+
+  // ワールド空間での移動値を求める
+  ObjectTransform& transform = model->gameObject.lock()->transform;
+
+  // ルートモーションノードを初回の姿勢にする
+  CompModel::Node& node = model->nodes[rootNodeId];
+  node.translate = beginPos;
+
+  // 移動値を反映
+  if (bakeTranslationY)
+  {
+    transform.position += localTranslation;
+  }
+  else
+  {
+    // Y軸は無視
+    transform.position.x += localTranslation.x;
+    transform.position.z += localTranslation.z;
+  }
+}
+
+DirectX::XMFLOAT3 ModelAnimator::CalculateRootNodePos(const float& animationTime)
+{
+  // 指定のアニメーションデータを取得
+  const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
+  const ModelResource::Animation& animation = animations.at(currentAnimeIndex[ANIM_AREA::BOTTOM]);
+
+  // アニメーションデータからキーフレームデータリストを取得
+  const std::vector<ModelResource::Keyframe>& keyframes = animation.keyframes;
+  // キーフレームの数を取得
+  int keyCount = (int)keyframes.size();
+
+  // ルートノードの姿勢を求める
+  for (int keyIndex = 0; keyIndex < keyCount - 1; ++keyIndex)
+  {
+    // 時間がどのキーフレームの間にいるか判定する
+    const ModelResource::Keyframe& keyframe0 = keyframes.at(keyIndex);
+    const ModelResource::Keyframe& keyframe1 = keyframes.at(keyIndex + 1);
+
+    // アニメーション経過時間が二つのキーフレームの間じゃなければ次のキーフレームへ
+    if (animationTime < keyframe0.seconds ||
+      animationTime > keyframe1.seconds)
+      continue;
+
+    // キーフレームの姿勢になるように補完する
+    {
+      // 2つのキーフレーム間の補完計算
+      // キーフレームに登録されているノード情報を取得（姿勢データ）
+      const ModelResource::NodeKeyData& key0 = keyframe0.nodeKeys.at(rootNodeId);
+      const ModelResource::NodeKeyData& key1 = keyframe1.nodeKeys.at(rootNodeId);
+
+      // 通常の計算
+      // 再生時間とキーフレームの時間から補完率を算出する（ 0 ～ 1 以内）
+      float rate = (animationTime - keyframe0.seconds) / (keyframe1.seconds - keyframe0.seconds);
+
+      // 前のキーフレームと次のキーフレームの姿勢を補完
+      // Translate補完
+      DirectX::XMVECTOR key0translate = DirectX::XMLoadFloat3(&key0.translate);
+      DirectX::XMVECTOR key1translate = DirectX::XMLoadFloat3(&key1.translate);
+
+      DirectX::XMFLOAT3 rootNodeTranslate = {};
+      DirectX::XMStoreFloat3(&rootNodeTranslate, DirectX::XMVectorLerp(key0translate, key1translate, rate));
+
+      return rootNodeTranslate;
+    }
+  }
+
+  return DirectX::XMFLOAT3(0, 0, 0);
 }
 
 // アニメーション再生
@@ -415,9 +516,9 @@ void ModelAnimator::PlayAnimationBottomSub(const int& index)
   animeBlendTimer[ANIM_AREA::BOTTOM_SUB] = 0.0f;
 }
 
-void ModelAnimator::SetSplitID(const ANIM_AREA& armArea, const int& armJoint, const int& armTip)
+void ModelAnimator::SetSplitID(const int& spineNodeId)
 {
-  this->splitNodeId[armArea - 1] = { armJoint ,armTip };
+  this->splitNodeId = spineNodeId;
 }
 
 // アニメーション再生中か

@@ -118,7 +118,7 @@ public:
     float waistHeight = 5.0f;
     float pushPower = 10.0f;
 
-    DirectX::XMINT2 armNodes[2] = { {-1,-1},{-1,-1} };
+    int spineNodeId = -1;
 
     template<class Archive>
     void serialize(Archive& archive, int version);
