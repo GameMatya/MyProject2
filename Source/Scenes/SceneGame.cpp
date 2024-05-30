@@ -36,24 +36,30 @@ void SceneGame::InitializeGameObjects()
   {
     player = objectManager.Create(TASK_LAYER::FIRST);
     player->SetName("Player");
-    //player->transform.position = { 44.16f ,0.17f, -51.6f };
-    player->transform.scale = { 0.01f,0.01f,0.01f };
-    //player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
+    player->transform.position = { 44.16f ,-109.0f, -51.6f };
+    player->transform.scale = { 0.02f,0.02f,0.02f };
+    player->transform.rotation = { 0.0f,-0.7309f,0.0f,0.6825f };
     player->SetPushPower(10.0f);
     weakPlayer = player->AddComponent<CompPlayer>();
     //compPlayer = weakPlayer.lock().get();
     CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
     model->AddCompCollisions();
 
+    //// ƒJƒƒ‰
+    //{
+    //  GameObject* obj = objectManager.Create(TASK_LAYER::SECOND).get();
+    //  obj->SetName("Camera");
+    //  CompCameraFree* camera = obj->AddComponent<CompCameraFree>().get();
+    //  camera->SetTargetFocus({ -7.0f,9.75f,10.91f });
+    //  camera->SetTargetEye({ 53.4f,9.56f,5.3f });
+    //  camera->SetAngle({ -0.17f,-1.13f,0 });
+    //  camera->SetDistance(1.08f);
+    //}
     // ƒJƒƒ‰
     {
-      GameObject* obj = objectManager.Create(TASK_LAYER::SECOND).get();
-      obj->SetName("Camera");
-      CompCameraFree* camera = obj->AddComponent<CompCameraFree>().get();
-      camera->SetTargetFocus({ -7.0f,9.75f,10.91f });
-      camera->SetTargetEye({ 53.4f,9.56f,5.3f });
-      camera->SetAngle({ -0.17f,-1.13f,0 });
-      camera->SetDistance(1.08f);
+      GameObject* camera = objectManager.Create(TASK_LAYER::THIRD).get();
+      camera->SetName("Camera");
+      camera->AddComponent<CompCameraPlayer>(weakPlayer);
     }
   }
 

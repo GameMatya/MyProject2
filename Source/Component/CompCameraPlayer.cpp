@@ -32,6 +32,9 @@ void CompCameraPlayer::Update(const float& elapsedTime)
 
 void CompCameraPlayer::UpdateDistance()
 {
+  float nextDistance = DISTANCE;
+
+  distance = std::lerp(distance, nextDistance, 0.3f);
 }
 
 DirectX::XMFLOAT3 CompCameraPlayer::CalcCameraUp()

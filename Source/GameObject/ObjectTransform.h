@@ -34,6 +34,9 @@ public:
   // ワールド行列の取得
   const DirectX::XMMATRIX& GetWorldTransform()const { return WorldTransform; }
 
+  // 回転行列の取得
+  const DirectX::XMMATRIX& GetRotationMatrix()const { return RotationMatrix; }
+
 public:
   DirectX::XMFLOAT3 position = {};
   DirectX::XMFLOAT4 rotation = { 0,0,0,1 }; // 3Dモデルの場合クォータニオン
@@ -50,6 +53,9 @@ private:
 
   // ワールド行列
   DirectX::XMMATRIX	WorldTransform = DirectX::XMMatrixIdentity();
+
+  // 回転行列
+  DirectX::XMMATRIX	RotationMatrix = DirectX::XMMatrixIdentity();
 
   // オブジェクトの親子関係用ポインタ
   WeakObject parentObject;

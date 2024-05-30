@@ -422,23 +422,29 @@ void ModelAnimator::ApplyRootMotion()
     localTranslation = newPos - oldPos;
   }
 
-  // ワールド空間での移動値を求める
-  ObjectTransform& transform = model->gameObject.lock()->transform;
-
   // ルートモーションノードを初回の姿勢にする
   CompModel::Node& node = model->nodes[rootNodeId];
   node.translate = beginPos;
 
+  // ワールド空間での移動値を求める
+  ObjectTransform& transform = model->gameObject.lock()->transform;
+  DirectX::XMFLOAT3 worldTranslation;
+  DirectX::XMVECTOR W = DirectX::XMVector3TransformNormal(DirectX::XMLoadFloat3(&localTranslation), transform.GetWorldTransform());
+  DirectX::XMStoreFloat3(&worldTranslation, W);
+
+  // 変化量が小さいため300倍
+  worldTranslation *= 300;
+
   // 移動値を反映
-  if (bakeTranslationY)
+  if (!bakeTranslationY)
   {
-    transform.position += localTranslation;
+    transform.position += worldTranslation;
   }
   else
   {
     // Y軸は無視
-    transform.position.x += localTranslation.x;
-    transform.position.z += localTranslation.z;
+    transform.position.x += worldTranslation.x;
+    transform.position.z += worldTranslation.z;
   }
 }
 

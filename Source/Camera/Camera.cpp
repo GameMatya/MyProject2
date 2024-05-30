@@ -233,6 +233,13 @@ void Camera::SetLookAt(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& fo
   XMVECTOR Eye = XMLoadFloat3(&eye);
   XMVECTOR Focus = XMLoadFloat3(&focus);
   XMVECTOR Up = XMLoadFloat3(&up);
+
+  // もし視点と注視点が同じならFocusを少し上にずらす
+  if (XMVector3Equal(Eye, Focus)) {
+    Focus = XMVectorSetY(Focus, XMVectorGetY(Focus) + 1.0f);
+  }
+
+  // ビュー行列を作成
   XMMATRIX View = XMMatrixLookAtLH(Eye, Focus, Up);
   XMStoreFloat4x4(&view, View);
 

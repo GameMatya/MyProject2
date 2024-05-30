@@ -573,7 +573,9 @@
     <ClCompile Include="Source\Component\CompPlayer.cpp">
       <Filter>GameCode\Component\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\StateMachine\PlayerState.cpp" />
+    <ClCompile Include="Source\StateMachine\PlayerState.cpp">
+      <Filter>GameCode\StateMachine\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics\Graphics.h">

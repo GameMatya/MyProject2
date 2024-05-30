@@ -55,9 +55,9 @@ private:
   const float SLOPE_RATE_BOOST = 0.1f;
 
   // 注視点の高さ調整
-  inline static const float       OFFSET = 2.0f;
+  inline static const float       OFFSET = 8.0f;
   // オブジェクトからカメラへの距離 ( 通常時 )
-  inline static const float       DISTANCE = 6.0f;
+  inline static const float       DISTANCE = 20.0f;
   // オブジェクトからカメラへの距離 ( 近接攻撃時 )
   inline static const float       DISTANCE_SLASH = 12.0f;
 
