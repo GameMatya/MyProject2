@@ -32,21 +32,6 @@ void CompCameraPlayer::Update(const float& elapsedTime)
 
 void CompCameraPlayer::UpdateDistance()
 {
-  CompPlayer::MAIN_STATE currentState = player.lock()->GetMainSM().GetCurrentState();
-
-  float nextDistance = DISTANCE;
-
-  // ステートが切り替わった時 
-  {
-    // 近接攻撃を開始した時
-    if (currentState == CompPlayer::MAIN_STATE::SLASH_APPROACH ||
-      currentState == CompPlayer::MAIN_STATE::SECOND_APPROACH) {
-
-      nextDistance = DISTANCE_SLASH;
-    }
-  }
-
-  distance = std::lerp(distance, nextDistance, 0.3f);
 }
 
 DirectX::XMFLOAT3 CompCameraPlayer::CalcCameraUp()

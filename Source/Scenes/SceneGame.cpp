@@ -44,7 +44,6 @@ void SceneGame::InitializeGameObjects()
     //compPlayer = weakPlayer.lock().get();
     CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
     model->AddCompCollisions();
-    model->animator.PlayAnimation(ModelAnimator::ANIM_AREA::BOTTOM, model->animator.FindAnimationId("AxeAttack_Charge"), true);
 
     // カメラ
     {
@@ -165,11 +164,6 @@ void SceneGame::Update(const float& elapsedTime)
 {
   // ゲームオブジェクトの更新
   objectManager.Update(elapsedTime);
-
-  if (Input::Instance().GetGamePad().GetButtonDown(Input::Instance().GetGamePad().BTN_A)) {
-    CompModel* model = player->GetComponent<CompModel>().get();
-    model->animator.PlayAnimation(ModelAnimator::ANIM_AREA::BOTTOM,0, false);
-  }
 
   // 制限時間の更新
   UpdateTimeLimit(elapsedTime);

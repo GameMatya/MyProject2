@@ -1,14 +1,15 @@
 #include "CompPlayer.h"
-#include "System/Input.h"
 #include "Camera/Camera.h"
-#include "Scenes/SceneGame.h"
 
+#include "System/Input.h"
+#include "Scenes/SceneGame.h"
 #include "SceneSystem/Scene.h"
+#include "StateMachine/PlayerState.h"
+
 #include "GameObject/GameObjectManager.h"
 #include "GameObject/CharacterManager.h"
 
 #include "imgui.h"
-#include <string>
 
 void CompPlayer::Start()
 {
@@ -16,12 +17,22 @@ void CompPlayer::Start()
 
   // マネージャーに自身を登録
   gameObject.lock()->GetObjectManager()->GetCharacterManager().RegisterPlayer(gameObject);
+
+  actionStateMachine.AddState(std::make_shared<PlayerIdle>(this));
+  actionStateMachine.AddState(std::make_shared<PlayerMove>(this));
+  actionStateMachine.AddState(std::make_shared<PlayerDodge>(this));
+
+  // 初期ステートを設定
+  actionStateMachine.ChangeState(ACTION_STATE::IDLE);
 }
 
 void CompPlayer::Update(const float& elapsedTime)
 {
   // 移動入力の更新
-  UpdateInputMove();
+  UpdateInputVector();
+
+  // 各行動の更新
+  actionStateMachine.Update(elapsedTime);
 
   // 無敵時間更新
   UpdateInvincibleTimer(elapsedTime);
@@ -49,7 +60,42 @@ void CompPlayer::DrawImGui()
   ImGui::InputFloat("Accele", &accelerate);
 }
 
-void CompPlayer::UpdateInputMove()
+void CompPlayer::Move(DirectX::XMFLOAT3 direction)
+{
+  float moveSpeed = 0.0f;
+
+  switch (condition)
+  {
+  case CompPlayer::CONDITION::NORMAL:
+    moveSpeed = MOVE_SPEED_NO_WEAPON;
+    break;
+  case CompPlayer::CONDITION::USE_ITEM:
+    moveSpeed = MOVE_SPEED_USE_ITEM;
+    break;
+  case CompPlayer::CONDITION::WEAPON_AXE:
+    moveSpeed = MOVE_SPEED_AXE;
+    break;
+  case CompPlayer::CONDITION::WEAPON_SWORD:
+    moveSpeed = MOVE_SPEED_SWORD;
+    break;
+  default:
+    assert(!"condition error");
+    break;
+  }
+
+  // 基底クラスのMove関数を呼び出す
+  CompCharacter::Move(direction, moveSpeed);
+}
+
+bool CompPlayer::InputDodge()
+{
+  // 入力情報を取得
+  GamePad& gamePad = Input::Instance().GetGamePad();
+
+  return gamePad.GetButtonDown(GamePad::BTN_A);
+}
+
+void CompPlayer::UpdateInputVector()
 {
   // 入力情報を取得
   GamePad& gamePad = Input::Instance().GetGamePad();
@@ -62,32 +108,10 @@ void CompPlayer::UpdateInputMove()
     return;
   }
 
-#if(0)
-  DirectX::XMFLOAT3 rightVec = {};
-  DirectX::XMFLOAT3 forwardVec = {};
-
-  // ロックオン時は敵に向かうベクトルを軸にする
-  if (isRockOn == true) {
-    forwardVec = GetAttackTargetVec();
-
-    // 外積で右ベクトルを求める
-    DirectX::XMFLOAT3 up = { 0,1,0 };
-    rightVec = Mathf::Cross(up, forwardVec);
-  }
-  // カメラ方向とスティックの入力値によって進行方向を計算する
-  else {
-    Camera& camera = Camera::Instance();
-    rightVec = camera.GetRight();
-    forwardVec = camera.GetForward();
-}
-#else
-
   // カメラ方向とスティックの入力値によって進行方向を計算する
   Camera& camera = Camera::Instance();
   const DirectX::XMFLOAT3& rightVec = camera.GetRight();
   const DirectX::XMFLOAT3& forwardVec = camera.GetForward();
-
-#endif
 
   // 移動ベクトルはXZ平面に水平なベクトルになるようにする
   // 右方向ベクトルをXZ単位ベクトルに変換

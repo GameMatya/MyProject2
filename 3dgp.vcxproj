@@ -278,6 +278,7 @@
     <ClCompile Include="Source\Scenes\SceneResult.cpp" />
     <ClCompile Include="Source\Scenes\SceneTitle.cpp" />
     <ClCompile Include="Source\StateMachine\CameraState.cpp" />
+    <ClCompile Include="Source\StateMachine\PlayerState.cpp" />
     <ClCompile Include="Source\System\Dialog.cpp" />
     <ClCompile Include="Source\System\framework.cpp" />
     <ClCompile Include="Source\System\GamePad.cpp" />
@@ -385,6 +386,7 @@
     <ClInclude Include="Source\Scenes\SceneResult.h" />
     <ClInclude Include="Source\Scenes\SceneTitle.h" />
     <ClInclude Include="Source\StateMachine\CameraState.h" />
+    <ClInclude Include="Source\StateMachine\PlayerState.h" />
     <ClInclude Include="Source\StateMachine\State.h" />
     <ClInclude Include="Source\StateMachine\StateMachine.h" />
     <ClInclude Include="Source\System\Dialog.h" />

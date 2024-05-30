@@ -43,9 +43,11 @@ public:
   // 衝撃を与える
   void AddImpulse(const DirectX::XMFLOAT3& impulse);
 
+  // 移動アニメーションの再生速度を算出
+  float CalcMoveAnimeSpeed();
+
 #pragma region ゲッター・セッター
   CompModel*    GetModel() { return model; }
-  const float&  GetMoveSpeed()  const { return moveSpeed; }
   const float&  GetMaxMoveSpeed()  const { return maxMoveSpeed; }
   const float&  GetJumpSpeed()  const { return jumpSpeed; }
   const float&  GetTurnSpeed()  const { return turnSpeed; }
@@ -65,14 +67,14 @@ protected:
   // 速力処理更新
   void UpdateVelocity(const float& elapsedTime);
 
+  // 無敵時間更新
+  void UpdateInvincibleTimer(const float& elapsedTime);
+
   // 着地した時に呼ばれる
   virtual void OnLanding() {}
 
   // ダメージを受けた時に呼ばれる
   virtual void OnDamaged();
-
-  // 無敵時間更新
-  void UpdateInvincibleTimer(const float& elapsedTime);
 
   // 死亡した時に呼ばれる
   virtual void OnDead() {}
@@ -116,14 +118,12 @@ protected:
   bool isGround = false;
 
 #pragma region 移動系パラメータ
-  // 歩行速度
-  float moveSpeed = 5.0f;
   // 加速力
   float accelerate = 1;
   // 最大移動速度
   float maxMoveSpeed = 5;
   // 旋回速度
-  float turnSpeed = DirectX::XMConvertToRadians(300);
+  float turnSpeed = DirectX::XMConvertToRadians(700);
   // ジャンプの速度
   float jumpSpeed = 1.0f;
   // 着地ステートへ遷移する落下速度

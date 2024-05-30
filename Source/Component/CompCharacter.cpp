@@ -176,7 +176,6 @@ bool CompCharacter::ApplyDamage(float damage, float invincibleTime)
 void CompCharacter::DrawImGui()
 {
   ImGui::InputFloat("Health", &health);
-  ImGui::DragFloat("Move Speed", &moveSpeed);
 
   ImGui::InputFloat3("Velocity", &velocity.x);
   ImGui::Checkbox("IsGround", &isGround);
@@ -192,6 +191,15 @@ void CompCharacter::UpdateInvincibleTimer(const float& elapsedTime)
   {
     invincibleTimer -= elapsedTime;
   }
+}
+
+float CompCharacter::CalcMoveAnimeSpeed()
+{
+  // êÖïΩà⁄ìÆë¨ìx
+  DirectX::XMFLOAT2 velocityXZ = DirectX::XMFLOAT2(velocity.x, velocity.z);
+  float currentMoveSpeedSq = Mathf::Dot(velocityXZ, velocityXZ);
+
+  return currentMoveSpeedSq / (maxMoveSpeed * maxMoveSpeed);
 }
 
 void CompCharacter::SettingCharacterDatas()

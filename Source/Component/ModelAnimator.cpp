@@ -375,7 +375,9 @@ void ModelAnimator::UpdateAnimationSecond(const float& elapsedTime, const ANIM_A
     {
       // アニメーションの終了
       animeEndFlag[area] = true;
+      currentAnimeSeconds[area] = 0.0f;
       oldAnimationSecond = 0.0f;
+
       return;
     }
   }
@@ -504,6 +506,8 @@ void ModelAnimator::PlayAnimation(const ANIM_AREA& area, const int& index, const
   // アニメーション遷移補完設定
   animeBlendTimer[area] = 0.0f;
   animeBlendSeconds[area] = blendSeconds;
+
+  oldAnimationSecond = 0.0f;
 
   animeSpeed[area] = 1.0f;
 }

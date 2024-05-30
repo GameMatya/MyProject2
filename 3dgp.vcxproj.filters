@@ -184,9 +184,6 @@
     <Filter Include="Graphics\TrailEffect">
       <UniqueIdentifier>{18abc539-5093-4f9d-a726-ed9e1742272b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameCode\StateMachine\ArmoredCore">
-      <UniqueIdentifier>{a3946637-dfa7-40f3-8366-5dff4a02ba15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameCode\Component\Sprite">
       <UniqueIdentifier>{61be9950-f2a0-4ce6-a6f6-42fb6a7ce05a}</UniqueIdentifier>
     </Filter>
@@ -294,6 +291,9 @@
     </Filter>
     <Filter Include="HLSL\SpriteShader\BendScreen">
       <UniqueIdentifier>{b67c2de1-d823-473c-8b05-b295228833b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameCode\StateMachine\Player">
+      <UniqueIdentifier>{0b73b1ed-52ad-4ba2-a56e-09c1f76b571c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -573,6 +573,7 @@
     <ClCompile Include="Source\Component\CompPlayer.cpp">
       <Filter>GameCode\Component\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Source\StateMachine\PlayerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Graphics\Graphics.h">
@@ -895,6 +896,9 @@
     </ClInclude>
     <ClInclude Include="Source\Component\CompPlayer.h">
       <Filter>GameCode\Component\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\StateMachine\PlayerState.h">
+      <Filter>GameCode\StateMachine\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
