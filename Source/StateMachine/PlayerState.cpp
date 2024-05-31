@@ -16,6 +16,7 @@ void PlayerIdle::Execute(const float& elapsedTime)
     return;
   }
 
+  // 回避ステート
   if (owner->InputDodge()) {
     owner->GetActionSM().ChangeState(CompPlayer::ACTION_STATE::DODGE);
     return;
@@ -69,5 +70,4 @@ void PlayerDodge::Execute(const float& elapsedTime)
     owner->GetActionSM().ChangeState(CompPlayer::ACTION_STATE::IDLE);
     return;
   }
-
 }
