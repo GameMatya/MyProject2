@@ -108,6 +108,8 @@ public:
     float						        secondsLength;
     std::vector<Keyframe>		keyframes;
     std::vector<Event>      events;
+    bool                    rootMotionFlg = false;
+    bool                    applyAxisUpFlg = false;
 
     template<class Archive>
     void serialize(Archive& archive, int version);
@@ -119,6 +121,7 @@ public:
     float pushPower = 10.0f;
 
     int spineNodeId = -1;
+    int rootNodeId = -1;
 
     template<class Archive>
     void serialize(Archive& archive, int version);
@@ -139,10 +142,14 @@ protected:
   void BuildModel(ID3D11Device* device, const char* dirname);
 
   // デシリアライズ
-  void Deserialize(const char* filename);
+  void Deserialize(const char* filename)override;
 
   // ノードインデックスを取得する
   int FindNodeIndex(NodeId nodeId) const;
+
+  void AnimationDeserialize(const char* filename);
+
+  void CharacterDeserialize(const char* filename);
 
 protected:
   std::vector<Node>		    nodes;

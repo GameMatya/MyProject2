@@ -42,7 +42,7 @@ void SceneGame::InitializeGameObjects()
     player->SetPushPower(10.0f);
     weakPlayer = player->AddComponent<CompPlayer>();
     //compPlayer = weakPlayer.lock().get();
-    CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/hunter.model", &modelRenderer).get();
+    CompModel* model = player->AddComponent<CompModel>("./Data/Model/Hunter/Hunter.model", &modelRenderer).get();
     model->AddCompCollisions();
 
     //// ƒJƒƒ‰

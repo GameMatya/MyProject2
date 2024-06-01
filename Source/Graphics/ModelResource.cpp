@@ -178,7 +178,9 @@ void ModelResource::Animation::serialize(Archive& archive, int version)
     CEREAL_NVP(name),
     CEREAL_NVP(secondsLength),
     CEREAL_NVP(keyframes),
-    CEREAL_NVP(events)
+    CEREAL_NVP(events),
+    CEREAL_NVP(rootMotionFlg),
+    CEREAL_NVP(applyAxisUpFlg)
   );
 }
 
@@ -188,7 +190,8 @@ void ModelResource::CharacterData::serialize(Archive& archive, int version)
   archive(
     CEREAL_NVP(waistHeight),
     CEREAL_NVP(pushPower),
-    CEREAL_NVP(spineNodeId)
+    CEREAL_NVP(spineNodeId),
+    CEREAL_NVP(rootNodeId)
   );
 }
 
@@ -284,9 +287,7 @@ void ModelResource::Deserialize(const char* filename)
     {
       archive(
         CEREAL_NVP(nodes),
-        CEREAL_NVP(meshes),
-        CEREAL_NVP(animations),
-        CEREAL_NVP(characterData)
+        CEREAL_NVP(meshes)
       );
     }
     catch (...)
@@ -301,6 +302,10 @@ void ModelResource::Deserialize(const char* filename)
     sprintf_s(buffer, sizeof(buffer), "File not found > %s", filename);
     _ASSERT_EXPR_A(false, buffer);
   }
+
+  AnimationDeserialize(filename);
+
+  CharacterDeserialize(filename);
 }
 
 // ノードインデックスを取得する
@@ -315,4 +320,66 @@ int ModelResource::FindNodeIndex(NodeId nodeId) const
     }
   }
   return -1;
+}
+
+void ModelResource::AnimationDeserialize(const char* filename)
+{
+  std::string path = filename;
+  path.erase(path.rfind('.') + 1);
+  path += "animation";
+
+  std::ifstream istream(path.c_str(), std::ios::binary);
+  if (istream.is_open())
+  {
+    cereal::BinaryInputArchive archive(istream);
+
+    try
+    {
+      archive(
+        CEREAL_NVP(animations)
+      );
+    }
+    catch (...)
+    {
+      LOG("animation deserialize failed.\n%s\n", filename);
+      return;
+    }
+  }
+  else
+  {
+    char buffer[256];
+    sprintf_s(buffer, sizeof(buffer), "File not found > %s", filename);
+    _ASSERT_EXPR_A(false, buffer);
+  }
+}
+
+void ModelResource::CharacterDeserialize(const char* filename)
+{
+  std::string path = filename;
+  path.erase(path.rfind('.') + 1);
+  path += "characterData";
+
+  std::ifstream istream(path.c_str());
+  if (istream.is_open())
+  {
+    cereal::JSONInputArchive archive(istream);
+
+    try
+    {
+      archive(
+        CEREAL_NVP(characterData)
+      );
+    }
+    catch (...)
+    {
+      LOG("CharacterData deserialize failed.\n%s\n", filename);
+      return;
+    }
+  }
+  else
+  {
+    char buffer[256];
+    sprintf_s(buffer, sizeof(buffer), "File not found > %s", filename);
+    _ASSERT_EXPR_A(false, buffer);
+  }
 }
