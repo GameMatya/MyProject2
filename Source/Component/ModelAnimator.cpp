@@ -11,7 +11,10 @@ void ModelAnimator::UpdateAnimations(const float& elapsedTime)
   // 下半身2アニメーション
   UpdateAnimationBottomSub(elapsedTime);
 
-  ApplyRootMotion();
+  // ルートモーション
+  if (CheckRootMotion() == true) {
+    ApplyRootMotion();
+  }
 
   // 再生時間の更新
   UpdateAnimationSecond(elapsedTime, ANIM_AREA::BOTTOM);
@@ -385,7 +388,8 @@ void ModelAnimator::UpdateAnimationSecond(const float& elapsedTime, const ANIM_A
 
 void ModelAnimator::ApplyRootMotion()
 {
-  if (!IsPlayAnimation(ANIM_AREA::BOTTOM))return;
+  const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
+  const ModelResource::Animation& animation = animations.at(currentAnimeIndex[ANIM_AREA::BOTTOM]);
 
   // 初回、前回、今回のルートモーションノードの姿勢を取得
   DirectX::XMFLOAT3 beginPos, oldPos, newPos;
@@ -399,9 +403,6 @@ void ModelAnimator::ApplyRootMotion()
   // 現在のアニメーション時間が、前のフレームのアニメーション時間より小さい場合 ( ループアニメーション )
   if (currentAnimeSeconds[ANIM_AREA::BOTTOM] < oldAnimationSecond)
   {
-    const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
-    const ModelResource::Animation& animation = animations.at(currentAnimeIndex[ANIM_AREA::BOTTOM]);
-
     // 終端の姿勢を取り出す
     DirectX::XMFLOAT3 endPos;
     // float誤差を考慮し、0.001fだけ減らす
@@ -436,7 +437,7 @@ void ModelAnimator::ApplyRootMotion()
   worldTranslation *= 300;
 
   // 移動値を反映
-  if (!bakeTranslationY)
+  if (animation.applyAxisUpFlg)
   {
     transform.position += worldTranslation;
   }
@@ -446,6 +447,21 @@ void ModelAnimator::ApplyRootMotion()
     transform.position.x += worldTranslation.x;
     transform.position.z += worldTranslation.z;
   }
+}
+
+bool ModelAnimator::CheckRootMotion()
+{
+  // アニメーションを再生していない
+  if (!IsPlayAnimation(ANIM_AREA::BOTTOM))return false;
+  // ルートノードが設定されていない
+  if (rootNodeId < 0)return false;
+
+  // ルートモーションを適用しないアニメーションの場合
+  const std::vector<ModelResource::Animation>& animations = model->resource->GetAnimations();
+  const ModelResource::Animation& animation = animations.at(currentAnimeIndex[ANIM_AREA::BOTTOM]);
+  if (animation.rootMotionFlg == false)return false;
+
+  return true;
 }
 
 DirectX::XMFLOAT3 ModelAnimator::CalculateRootNodePos(const float& animationTime)
@@ -525,11 +541,6 @@ void ModelAnimator::PlayAnimationBottomSub(const int& index)
 
   // アニメーション遷移補完設定
   animeBlendTimer[ANIM_AREA::BOTTOM_SUB] = 0.0f;
-}
-
-void ModelAnimator::SetSplitID(const int& spineNodeId)
-{
-  this->splitNodeId = spineNodeId;
 }
 
 // アニメーション再生中か

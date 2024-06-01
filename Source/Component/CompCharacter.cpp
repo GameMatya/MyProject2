@@ -210,6 +210,7 @@ void CompCharacter::SettingCharacterDatas()
   {
     if (data.spineNodeId > 0)
       model->animator.SetSplitID(data.spineNodeId);
+      model->animator.SetRootID(data.rootNodeId);
   }
 
   // ‰Ÿ‚µo‚µ‚Ì‹­‚³‚ğİ’è

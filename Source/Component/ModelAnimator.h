@@ -39,7 +39,9 @@ public:
   void SetBottomBlendRate(const float& rate) { animeBlendRate = rate; }
 
   // 腰のノード番号
-  void SetSplitID(const int& spineNodeId);
+  void SetSplitID(const int& spineNodeId) { this->splitNodeId = spineNodeId; }
+  // ルートボーンの番号
+  void SetRootID(const int& rootId){ this->rootNodeId = rootId; }
 
   // アニメーション再生速度設定
   void SetAnimationSpeed(const ANIM_AREA& bodyArea, const float& speed) { animeSpeed[bodyArea] = (std::max)(speed, 0.0f); }
@@ -77,13 +79,16 @@ private:
   // ルートモーションを適用
   void ApplyRootMotion();
 
+  // ルートモーションを適用するか確認
+  bool CheckRootMotion();
+
   // 特定のアニメーション時間でのルートノードの姿勢を求める
   DirectX::XMFLOAT3 CalculateRootNodePos(const float& animationTime);
 
 private:
   CompModel* model = nullptr;
   int splitNodeId = -1; // 腰のノード番号
-  int rootNodeId = 9;  // ルートノードの番号
+  int rootNodeId = -1;   // ルートノードの番号
 
   std::array<int, ANIM_AREA::MAX>       currentAnimeIndex = { -1,-1,-1 };  // 再生中のアニメーション番号
   std::array<float, ANIM_AREA::MAX - 1> currentAnimeSeconds = {};          // アニメーションの再生時間
@@ -91,7 +96,6 @@ private:
 
   // ルートモーション用
   float oldAnimationSecond = 0.0f; // 前フレームのアニメーション時間
-  bool  bakeTranslationY = false;  // Y軸の移動量を反映するかフラグ
 
   // ワンショットアニメーション変数
   std::array<bool, ANIM_AREA::MAX - 1>  animeLoopFlag = {};
