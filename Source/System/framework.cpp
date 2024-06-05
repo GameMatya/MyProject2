@@ -6,7 +6,7 @@
 #include "Graphics/EffectManager.h"
 #include "TimeManager/TimeManager.h"
 
-static const UINT SYNC_INTERVAL{ 0 }; // 1 にするとFPSの上限が60Fになる
+static const UINT SYNC_INTERVAL{ 1 }; // 1 にするとFPSの上限が60Fになる
 
 framework::framework(HWND hwnd) :
   hwnd(hwnd)

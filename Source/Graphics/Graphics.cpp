@@ -79,7 +79,7 @@ Graphics::Graphics(HWND hWnd) :hwnd(hwnd)
       ARRAYSIZE(featureLevels),		// featureLevels配列の要素数を渡す。
       D3D11_SDK_VERSION,				// SDKのバージョン。必ずこの値。
       &swapchainDesc,					// ここで設定した構造体に設定されているパラメータでSwapChainが作成される。
-      swapchain.GetAddressOf(),		// 作成が成功した場合に、SwapChainのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でSwapChainを操作する。
+      swapChain.GetAddressOf(),		// 作成が成功した場合に、SwapChainのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でSwapChainを操作する。
       device.GetAddressOf(),			// 作成が成功した場合に、Deviceのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でDeviceを操作する。
       &featureLevel,					// 作成に成功したD3D_FEATURE_LEVELを格納するためのD3D_FEATURE_LEVEL列挙型変数のアドレスを設定する。
       immediateContext.GetAddressOf()	// 作成が成功した場合に、Contextのアドレスを格納するポインタ変数へのアドレス。ここで指定したポインタ変数経由でContextを操作する。
@@ -92,7 +92,7 @@ Graphics::Graphics(HWND hWnd) :hwnd(hwnd)
     // スワップチェーンからバックバッファテクスチャを取得する。
     // ※スワップチェーンに内包されているバックバッファテクスチャは'色'を書き込むテクスチャ。
     Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
-    hr = swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
+    hr = swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
     _ASSERT_EXPR(SUCCEEDED(hr), HrTrace(hr));
 
     // バックバッファテクスチャへの書き込みの窓口となるレンダーターゲットビューを生成する。

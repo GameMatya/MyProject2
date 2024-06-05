@@ -35,7 +35,7 @@ void CompCharacter::Move(DirectX::XMFLOAT3 direction, float maxSpeed)
   moveVecXZ.z = direction.z;
 
   // 最大速度設定
-  maxMoveSpeed = maxSpeed;
+  moveSpeed = maxSpeed;
 }
 
 void CompCharacter::AnimationFromVectors(DirectX::XMFLOAT3 moveVec, int baseAnime, bool isLoop, const float& blendSecond)
@@ -199,7 +199,7 @@ float CompCharacter::CalcMoveAnimeSpeed()
   DirectX::XMFLOAT2 velocityXZ = DirectX::XMFLOAT2(velocity.x, velocity.z);
   float currentMoveSpeedSq = Mathf::Dot(velocityXZ, velocityXZ);
 
-  return currentMoveSpeedSq / (maxMoveSpeed * maxMoveSpeed);
+  return min(currentMoveSpeedSq / (moveSpeed * moveSpeed), 1.0f);
 }
 
 void CompCharacter::SettingCharacterDatas()
@@ -210,7 +210,7 @@ void CompCharacter::SettingCharacterDatas()
   {
     if (data.spineNodeId > 0)
       model->animator.SetSplitID(data.spineNodeId);
-      model->animator.SetRootID(data.rootNodeId);
+    model->animator.SetRootID(data.rootNodeId);
   }
 
   // 押し出しの強さを設定
@@ -311,51 +311,24 @@ void CompCharacter::UpdateHorizontalVelocity(const float& elapsedFrame)
     }
   }
 
-  lengthSq = velocity.x * velocity.x + velocity.z * velocity.z;
   float moveVecLengthSq = Mathf::Dot(moveVecXZ, moveVecXZ);
 
-  // XZ平面の速力を加速する
-  if (lengthSq <= maxMoveSpeed * maxMoveSpeed)
+  // 移動ベクトルがゼロベクトルでないなら加速する
+  if (moveVecLengthSq > 0.0f)
   {
-    // 移動ベクトルがゼロベクトルでないなら加速する
-    if (moveVecLengthSq > 0.0f)
+    // 加速力
+    float acceleration = this->accelerate * elapsedFrame;
+
+    // 移動ベクトルによる加速処理
+    velocity.x += acceleration * moveVecXZ.x;
+    velocity.z += acceleration * moveVecXZ.z;
+
+    // 最大速度制限
+    float length = sqrtf(lengthSq);
+    if (length > moveSpeed)
     {
-      // 加速力
-      float acceleration = this->accelerate * elapsedFrame;
-
-      // 移動ベクトルによる加速処理
-      velocity.x += acceleration * moveVecXZ.x;
-      velocity.z += acceleration * moveVecXZ.z;
-
-      // 最大速度制限
-      float length = sqrtf(lengthSq);
-      if (length > maxMoveSpeed)
-      {
-        velocity.x = (velocity.x / length) * maxMoveSpeed;
-        velocity.z = (velocity.z / length) * maxMoveSpeed;
-      }
-    }
-  }
-  // 移動速度が最大移動速度より大きかったら移動入力に基づいて減速
-  else
-  {
-    // 移動ベクトルがゼロベクトルでないなら加速する
-    if (moveVecLengthSq > 0.0f)
-    {
-      // 加速力
-      float acceleration = this->accelerate * elapsedFrame;
-
-      // 移動ベクトルによる加速処理
-      DirectX::XMFLOAT3 newVelocity = velocity;
-      newVelocity.x += acceleration * moveVecXZ.x;
-      newVelocity.y = 0;
-      newVelocity.z += acceleration * moveVecXZ.z;
-
-      // 加速後の移動ベクトルが元の移動ベクトルより小さければ反映 ( 減速していれば反映 )
-      if (Mathf::Dot(newVelocity, newVelocity) < lengthSq) {
-        velocity.x = newVelocity.x;
-        velocity.z = newVelocity.z;
-      }
+      velocity.x = (velocity.x / length) * moveSpeed;
+      velocity.z = (velocity.z / length) * moveSpeed;
     }
   }
 

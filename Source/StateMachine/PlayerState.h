@@ -20,6 +20,10 @@ public:
   PlayerMove(CompPlayer* owner) :State(owner) {}
   void Enter()override;
   void Execute(const float& elapsedTime)override;
+  void Exit()override;
+
+private:
+  bool oldDashFlg = false;
 
 };
 
@@ -32,3 +36,41 @@ public:
 
 };
 
+class PlayerMoveWeapon :public State<CompPlayer>
+{
+public:
+  PlayerMoveWeapon(CompPlayer* owner) :State(owner) {}
+  void Enter()override;
+  void Execute(const float& elapsedTime)override;
+
+};
+
+class PlayerAttack:public  State<CompPlayer>
+{
+public:
+  PlayerAttack(CompPlayer* owner) :State(owner) {}
+  void Enter()override;
+  void Execute(const float& elapsedTime)override;
+
+};
+
+class PlayerAttackLoop:public  State<CompPlayer>
+{
+public:
+  PlayerAttackLoop(CompPlayer* owner) :State(owner) {}
+  void Enter()override;
+  void Execute(const float& elapsedTime)override;
+
+private:
+  int loopCount = 0;
+
+};
+
+class PlayerAttackTrans:public  State<CompPlayer>
+{
+public:
+  PlayerAttackTrans(CompPlayer* owner) :State(owner) {}
+  void Enter()override;
+  void Execute(const float& elapsedTime)override;
+
+};

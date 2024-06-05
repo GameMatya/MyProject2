@@ -167,7 +167,8 @@ inline void ModelResource::Animation::Event::serialize(Archive& archive, int ver
 {
   archive(
     CEREAL_NVP(frames),
-    CEREAL_NVP(type)
+    CEREAL_NVP(type),
+    CEREAL_NVP(index)
   );
 }
 

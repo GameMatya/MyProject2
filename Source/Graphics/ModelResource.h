@@ -6,6 +6,7 @@ enum class ANIMATION_EVENT {
   ATTACK,         // 攻撃の判定時間
   CANCEL_ACCEPT,  // アニメーションのキャンセル受付時間
   EFFECT_START,   // エフェクト発生時間
+  INVINCIBLE,     // 無敵時間
   MAX
 };
 
@@ -100,6 +101,7 @@ public:
     struct Event {
       DirectX::XMINT2 frames;
       ANIMATION_EVENT type;
+      int             index;
 
       template<class Archive>
       void serialize(Archive& archive, int version);

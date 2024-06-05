@@ -26,15 +26,19 @@
 #include "Graphics/TrailEffectManager.h"
 #include "Graphics/EffectManager.h"
 
-using namespace DirectX;
-SharedObject player;
+#include "map"
+
 void SceneGame::InitializeGameObjects()
 {
+  std::map<int, std::string> m;
+  m.emplace(1,"aaa");
+  m.clear();
+
   // プレイヤーの生成
   CompPlayer* compPlayer = nullptr;
   std::weak_ptr<CompPlayer> weakPlayer;
   {
-    player = objectManager.Create(TASK_LAYER::FIRST);
+    SharedObject player = objectManager.Create(TASK_LAYER::FIRST);
     player->SetName("Player");
     player->transform.position = { 44.16f ,-109.0f, -51.6f };
     player->transform.scale = { 0.02f,0.02f,0.02f };
@@ -165,7 +169,6 @@ void SceneGame::Finalize()
   //bgm->Stop();
 }
 
-#include "System/Input.h"
 void SceneGame::Update(const float& elapsedTime)
 {
   // ゲームオブジェクトの更新

@@ -378,7 +378,6 @@ void ModelAnimator::UpdateAnimationSecond(const float& elapsedTime, const ANIM_A
     {
       // アニメーションの終了
       animeEndFlag[area] = true;
-      currentAnimeSeconds[area] = 0.0f;
       oldAnimationSecond = 0.0f;
 
       return;

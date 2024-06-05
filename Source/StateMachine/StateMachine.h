@@ -18,8 +18,8 @@ public:
     stateList.clear();
   }
 
-  void AddState(StatePtr state) {
-    stateList.emplace_back(state);
+  void AddState(Enum index, StatePtr state) {
+    stateList.emplace(index, state);
   }
 
   void Update(const float& elapsedTime) {
@@ -34,6 +34,7 @@ public:
     // 現在のステートを終了させる
     if (currentState != nullptr)
     {
+      nextIndex = index;
       currentState->Exit();
     }
     // 新しいステートに切り替え、呼び出し
@@ -45,18 +46,20 @@ public:
       return;
     }
 
-    currentState = stateList[static_cast<int>(index)];
+    currentState = stateList[index];
     currentState->Enter();
   }
 
   Enum GetCurrentState() { return currentIndex; }
+  Enum GetNextState() { return nextIndex; }
   Enum GetOldState() { return oldIndex; }
 
 private:
   StatePtr currentState = nullptr;
+  Enum nextIndex;
   Enum currentIndex;
   Enum oldIndex;
 
-  std::vector<StatePtr> stateList;
+  std::map<Enum, StatePtr> stateList;
 
 };

@@ -32,7 +32,7 @@ public:
   int FindAnimationId(const std::string& name);
 
   // アニメーション再生
-  void PlayAnimation(const ANIM_AREA& bodyArea, const int& index, const bool& isLoop, const float& blendSeconds = 0.2f); // 全身
+  void PlayAnimation(const ANIM_AREA& bodyArea, const int& index, const bool& isLoop, const float& blendSeconds = 0.7f); // 全身
   void PlayAnimationBottomSub(const int& index); // 下半身2
 
   // 下半身1と下半身2のブレンド率

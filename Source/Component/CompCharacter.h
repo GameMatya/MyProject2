@@ -48,7 +48,7 @@ public:
 
 #pragma region ゲッター・セッター
   CompModel*    GetModel() { return model; }
-  const float&  GetMaxMoveSpeed()  const { return maxMoveSpeed; }
+  const float&  GetMoveSpeed()  const { return moveSpeed; }
   const float&  GetJumpSpeed()  const { return jumpSpeed; }
   const float&  GetTurnSpeed()  const { return turnSpeed; }
   const bool&   GetIsGround()   const { return isGround; }
@@ -105,7 +105,7 @@ protected:
   // 重力の影響度
   float gravityAffect = 1.0f;
   // 摩擦 ( 減速用 )
-  float friction = 0.5f;
+  float friction = 1.6f;
   // 空中制御
   float airControl = 0.3f;
 
@@ -120,8 +120,8 @@ protected:
 #pragma region 移動系パラメータ
   // 加速力
   float accelerate = 1;
-  // 最大移動速度
-  float maxMoveSpeed = 5;
+  // 移動速度
+  float moveSpeed = 5;
   // 旋回速度
   float turnSpeed = DirectX::XMConvertToRadians(700);
   // ジャンプの速度

@@ -6,8 +6,8 @@
 void CompCameraPlayer::Start()
 {
   // ステート追加
-  cameraSM.AddState(std::make_shared<CameraStateFollow>(this));
-  cameraSM.AddState(std::make_shared<CameraStateRockOn>(this));
+  cameraSM.AddState(CAMERA_STATE::FOLLOW, std::make_shared<CameraStateFollow>(this));
+  cameraSM.AddState(CAMERA_STATE::ROCK_ON, std::make_shared<CameraStateRockOn>(this));
 
   // 初期ステートを設定
   cameraSM.ChangeState(CAMERA_STATE::FOLLOW);
@@ -42,7 +42,7 @@ DirectX::XMFLOAT3 CompCameraPlayer::CalcCameraUp()
   if (slopeApplyRate > 0.0f) {
     DirectX::XMFLOAT3 move = gameObject.lock()->transform.position - oldPosition;
     move.y = 0;
-    
+
     // カメラが移動している
     if (Mathf::Dot(move, move) >= 0.0001f) {
       move = Mathf::Normalize(move);

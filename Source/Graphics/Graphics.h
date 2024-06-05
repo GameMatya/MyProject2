@@ -53,7 +53,7 @@ public:
   ID3D11DeviceContext* GetDeviceContext() const { return immediateContext.Get(); }
 
   // スワップチェーン取得
-  IDXGISwapChain* GetSwapChain() const { return swapchain.Get(); }
+  IDXGISwapChain* GetSwapChain() const { return swapChain.Get(); }
 
   // レンダーターゲットビュー取得
   ID3D11RenderTargetView* GetRenderTargetView() const { return renderTargetView.Get(); }
@@ -107,7 +107,7 @@ private:
 
   Microsoft::WRL::ComPtr<ID3D11Device>			      device;
   Microsoft::WRL::ComPtr<ID3D11DeviceContext>		  immediateContext;
-  Microsoft::WRL::ComPtr<IDXGISwapChain>			    swapchain;
+  Microsoft::WRL::ComPtr<IDXGISwapChain>			    swapChain;
   Microsoft::WRL::ComPtr<ID3D11RenderTargetView>	renderTargetView;
   Microsoft::WRL::ComPtr<ID3D11Texture2D>			    depthStencilBuffer;
   Microsoft::WRL::ComPtr<ID3D11DepthStencilView>	depthStencilView;
