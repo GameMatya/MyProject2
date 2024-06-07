@@ -319,7 +319,7 @@ void ModelAnimator::UpdateAnimationBottomSub(const float& elapsedTime)
   }
 }
 
-bool ModelAnimator::CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent) const
+bool ModelAnimator::CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent, const int& index) const
 {
   // 再生中じゃなければ,エリアが下半身2だったら,停止する
   if (IsPlayAnimation(area) == false)return false;
@@ -331,7 +331,8 @@ bool ModelAnimator::CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& ani
   // 対応するイベントを探す
   std::queue<ModelResource::Animation::Event> eventQueue;
   for (auto& itr : events) {
-    if (itr.type == animEvent)
+    if (itr.type != animEvent)continue;
+    if (itr.index != index)continue;
       eventQueue.push(itr);
   }
 

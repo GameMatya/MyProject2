@@ -110,7 +110,7 @@ private:
 
 private:
   // 先行入力受け付けフレーム
-  const int EARLY_INPUT_RECEIPT_FRAME = 15;
+  const int EARLY_INPUT_RECEIPT_FRAME = 12;
 
   // 移動速度
   const float MOVE_SPEED_NO_WEAPON = 16.0f;

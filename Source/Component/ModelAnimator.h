@@ -41,7 +41,7 @@ public:
   // 腰のノード番号
   void SetSplitID(const int& spineNodeId) { this->splitNodeId = spineNodeId; }
   // ルートボーンの番号
-  void SetRootID(const int& rootId){ this->rootNodeId = rootId; }
+  void SetRootID(const int& rootId) { this->rootNodeId = rootId; }
 
   // アニメーション再生速度設定
   void SetAnimationSpeed(const ANIM_AREA& bodyArea, const float& speed) { animeSpeed[bodyArea] = (std::max)(speed, 0.0f); }
@@ -64,7 +64,7 @@ public:
   // 現在のアニメーション再生速度取得
   float GetAnimationSpeed(const ANIM_AREA& bodyArea)const { return animeSpeed[bodyArea]; }
 
-  bool CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent)const;
+  bool CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent, const int& index = 0)const;
 
 private:
   // アニメーション更新処理
