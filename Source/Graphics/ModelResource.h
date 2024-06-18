@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ModelResourceBase.h"
+#include <map>
 
 enum class ANIMATION_EVENT {
   ATTACK,         // 攻撃の判定時間
@@ -119,11 +120,21 @@ public:
 
   struct CharacterData
   {
+    struct RootMotionParam {
+      float motionScale = 300.0f;
+      std::vector<DirectX::XMFLOAT3> manualMovements;
+
+      template<class Archive>
+      void serialize(Archive& archive, int version);
+    };
+
     float waistHeight = 5.0f;
     float pushPower = 10.0f;
 
     int spineNodeId = -1;
     int rootNodeId = -1;
+
+    std::map<int,RootMotionParam> rootMotionParams;
 
     template<class Archive>
     void serialize(Archive& archive, int version);
@@ -133,11 +144,22 @@ public:
   ModelResource() {}
   virtual ~ModelResource() {}
 
+  void SetRootMotionScale(const int& animeId, const float& scale) { characterData.rootMotionParams[animeId].motionScale = scale; }
+  
   // 各種データ取得
   const std::vector<Mesh>& GetMeshes() const { return meshes; }
   const std::vector<Node>& GetNodes() const { return nodes; }
   const std::vector<Animation>& GetAnimations() const { return animations; }
   const CharacterData& GetCharacterData() const { return characterData; }
+
+#ifdef _DEBUG
+  CharacterData& GetCharacterData_DebugOnly() { return characterData; }
+
+  bool CharacterSerialize(const char* filename);
+
+  std::string ResourcePath() { return resourcePath; }
+
+#endif // _DEBUG
 
 protected:
   // モデルセットアップ
@@ -159,4 +181,8 @@ protected:
   std::vector<Animation>	animations;
   CharacterData	          characterData;
 
+#ifdef _DEBUG
+  std::string resourcePath;
+
+#endif
 };

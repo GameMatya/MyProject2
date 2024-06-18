@@ -1,6 +1,7 @@
 #include "ModelAnimator.h"
 #include "CompModel.h"
 #include "imgui.h"
+#include "System/Logger.h"
 #include <queue>
 
 void ModelAnimator::UpdateAnimations(const float& elapsedTime)
@@ -31,6 +32,63 @@ void ModelAnimator::UpdateAnimations(const float& elapsedTime)
 
 void ModelAnimator::DrawImGui()
 {
+#ifdef _DEBUG
+  if (ImGui::TreeNode("Motion")) {
+    auto resource = model->GetResource_DebugOnly();
+    auto& characterData = resource->GetCharacterData_DebugOnly();
+
+    if (ImGui::Button("SetNowAnimation")) {
+      strcpy_s(animeName, resource->GetAnimations().at(currentAnimeIndex[ANIM_AREA::BOTTOM]).name.c_str());
+      serializeSuccess = false;
+    }
+    if (ImGui::InputText("AnimeName", animeName, 256)) {
+      serializeSuccess = false;
+    }
+    int animeID = FindAnimationId(animeName);
+
+    isSetRoot = true;
+    if (animeID < 0) {
+      isSetRoot = false;
+    }
+    else if (characterData.rootMotionParams.find(animeID) == characterData.rootMotionParams.end()) {
+      isSetRoot = false;
+    }
+
+    if (isSetRoot == true) {
+      float scale = characterData.rootMotionParams.at(animeID).motionScale;
+      ImGui::DragFloat("Scale", &scale);
+      resource->SetRootMotionScale(animeID, scale);
+
+      if (ImGui::Button("Save")) {
+        isSerialize = true;
+        serializeSuccess = resource->CharacterSerialize((resource->ResourcePath()).c_str());
+      }
+      if (isSerialize) {
+        if (serializeSuccess) {
+          ImGui::TextColored(ImVec4(0, 1, 0, 1), "Success");
+        }
+        else {
+          ImGui::TextColored(ImVec4(1, 0, 0, 1), "Failed");
+        }
+      }
+    }
+
+    if (isSetRoot == false) {
+      ImGui::TextColored(ImVec4(1, 0, 0, 1), "Failed");
+
+      if (ImGui::Button("EmplaceNewParam")) {
+        characterData.rootMotionParams.emplace(
+          animeID,
+          ModelResource::CharacterData::RootMotionParam(
+            300.0f,
+            std::vector<DirectX::XMFLOAT3>()
+          )
+        );
+      }
+    }
+
+    ImGui::TreePop();
+  }
   if (ImGui::TreeNode("Index")) {
     ImGui::Text((std::string("AnimationID Bottom : ") + std::to_string(currentAnimeIndex[ANIM_AREA::BOTTOM])).c_str());
     ImGui::Text((std::string("AnimationID BottomSub : ") + std::to_string(currentAnimeIndex[ANIM_AREA::BOTTOM_SUB])).c_str());
@@ -66,6 +124,7 @@ void ModelAnimator::DrawImGui()
     ImGui::TreePop();
   }
 
+#endif // _DEBUG
 }
 
 int ModelAnimator::FindAnimationId(const std::string& name)
@@ -78,8 +137,15 @@ int ModelAnimator::FindAnimationId(const std::string& name)
       return i;
     }
   }
+#ifdef _DEBUG
+  Logger::Print("**Animation Not Found**\n\n");
+
+#else
   // Œ©‚Â‚©‚ç‚È‚¯‚ê‚Î’âŽ~
   assert(!"Animation Not Found");
+
+#endif // _DEBUG
+
   return -1;
 }
 
@@ -333,7 +399,7 @@ bool ModelAnimator::CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& ani
   for (auto& itr : events) {
     if (itr.type != animEvent)continue;
     if (itr.index != index)continue;
-      eventQueue.push(itr);
+    eventQueue.push(itr);
   }
 
   while (eventQueue.empty() == false) {
@@ -433,8 +499,14 @@ void ModelAnimator::ApplyRootMotion()
   DirectX::XMVECTOR W = DirectX::XMVector3TransformNormal(DirectX::XMLoadFloat3(&localTranslation), transform.GetWorldTransform());
   DirectX::XMStoreFloat3(&worldTranslation, W);
 
-  // •Ï‰»—Ê‚ª¬‚³‚¢‚½‚ß300”{
-  worldTranslation *= 300;
+  // ƒ‹[ƒgƒ‚[ƒVƒ‡ƒ“‚Ì‰e‹¿“x
+  float rootMotionScale = DEFAULT_MOTION_SCALE;
+  auto motionParam = model->GetResource()->GetCharacterData().rootMotionParams;
+  if (motionParam.find(currentAnimeIndex[ANIM_AREA::BOTTOM]) != motionParam.end()) {
+    rootMotionScale = motionParam.at(currentAnimeIndex[ANIM_AREA::BOTTOM]).motionScale;
+  }
+
+  worldTranslation *= rootMotionScale;
 
   // ˆÚ“®’l‚ð”½‰f
   if (animation.applyAxisUpFlg)

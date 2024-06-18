@@ -52,6 +52,10 @@ public:
   // リソース取得
   const ModelResource* GetResource() const { return resource.get(); }
 
+#ifdef _DEBUG
+  ModelResource* GetResource_DebugOnly() { return resource.get(); }
+#endif // _DEBUG
+
 private:
   // 行列計算
   void UpdateTransform(const DirectX::XMMATRIX& Transform);

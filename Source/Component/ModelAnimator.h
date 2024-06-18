@@ -35,6 +35,12 @@ public:
   void PlayAnimation(const ANIM_AREA& bodyArea, const int& index, const bool& isLoop, const float& blendSeconds = 0.7f); // 全身
   void PlayAnimationBottomSub(const int& index); // 下半身2
 
+  // アニメーション再生中か
+  bool IsPlayAnimation(const ANIM_AREA& bodyArea) const;
+
+  // アニメーションイベント取得
+  bool CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent, const int& index = 0) const;
+
   // 下半身1と下半身2のブレンド率
   void SetBottomBlendRate(const float& rate) { animeBlendRate = rate; }
 
@@ -49,9 +55,6 @@ public:
   // ループフラグの設定
   void SetAnimationLoop(const ANIM_AREA& bodyArea, const bool& isLoop) { animeLoopFlag[bodyArea] = isLoop; }
 
-  // アニメーション再生中か
-  bool IsPlayAnimation(const ANIM_AREA& bodyArea) const;
-
   // 現在のアニメーション再生時間取得
   float GetCurrentAnimationSeconds(const ANIM_AREA& bodyArea) const { return currentAnimeSeconds[bodyArea]; }
 
@@ -63,8 +66,6 @@ public:
 
   // 現在のアニメーション再生速度取得
   float GetAnimationSpeed(const ANIM_AREA& bodyArea)const { return animeSpeed[bodyArea]; }
-
-  bool CheckEvent(const ANIM_AREA& area, const ANIMATION_EVENT& animEvent, const int& index = 0)const;
 
 private:
   // アニメーション更新処理
@@ -86,6 +87,8 @@ private:
   DirectX::XMFLOAT3 CalculateRootNodePos(const float& animationTime);
 
 private:
+  const float DEFAULT_MOTION_SCALE = 300.0f;
+
   CompModel* model = nullptr;
   int splitNodeId = -1; // 腰のノード番号
   int rootNodeId = -1;   // ルートノードの番号
@@ -106,4 +109,11 @@ private:
   std::array<float, ANIM_AREA::MAX>     animeBlendTimer = {};   // 補完率計算用タイマー
   std::array<float, ANIM_AREA::MAX - 1> animeBlendSeconds = {}; // 補完が完了する時間
 
+#ifdef _DEBUG
+  char animeName[256] = "";
+  bool isSetRoot = false;
+  bool serializeSuccess = false;
+  bool isSerialize = false;
+
+#endif
 };

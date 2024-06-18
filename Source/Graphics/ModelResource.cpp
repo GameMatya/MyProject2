@@ -6,6 +6,7 @@
 #include <cereal/archives/json.hpp>
 #include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
+#include <cereal/types/map.hpp>
 #include <WICTextureLoader.h>
 
 #include <stb_image.h>
@@ -186,13 +187,23 @@ void ModelResource::Animation::serialize(Archive& archive, int version)
 }
 
 template<class Archive>
+void ModelResource::CharacterData::RootMotionParam::serialize(Archive& archive, int version)
+{
+  archive(
+    CEREAL_NVP(motionScale),
+    CEREAL_NVP(manualMovements)
+  );         
+}
+
+template<class Archive>
 void ModelResource::CharacterData::serialize(Archive& archive, int version)
 {
   archive(
     CEREAL_NVP(waistHeight),
     CEREAL_NVP(pushPower),
     CEREAL_NVP(spineNodeId),
-    CEREAL_NVP(rootNodeId)
+    CEREAL_NVP(rootNodeId),
+    CEREAL_NVP(rootMotionParams)
   );
 }
 
@@ -370,6 +381,11 @@ void ModelResource::CharacterDeserialize(const char* filename)
       archive(
         CEREAL_NVP(characterData)
       );
+
+#ifdef _DEBUG
+      resourcePath = path;
+
+#endif // _DEBUG
     }
     catch (...)
     {
@@ -384,3 +400,34 @@ void ModelResource::CharacterDeserialize(const char* filename)
     _ASSERT_EXPR_A(false, buffer);
   }
 }
+
+#ifdef _DEBUG
+
+bool ModelResource::CharacterSerialize(const char* filename)
+{
+  std::string path = filename;
+  path.erase(path.find('.') + 1);
+  path += "characterData";
+
+  std::ofstream ostream(path.c_str());
+  if (ostream.is_open())
+  {
+    cereal::JSONOutputArchive archive(ostream);
+
+    try
+    {
+      archive(
+        CEREAL_NVP(characterData)
+      );
+      return true;
+    }
+    catch (...)
+    {
+      LOG("characterData serialize failed.\n%s\n", filename);
+      return false;
+    }
+  }
+      return false;
+}
+
+#endif // _DEBUG
